@@ -18,4 +18,5 @@ However, since we are given information about financial cost (for both component
 
 ## UML Class Diagram
 This is a proposed class structure for the cost estimator. Note that in this design, we define a HardwareComponent class, a SoftwareComponent class, a StaffMember class, and a ProjectEstimator class.
-![project_cost_estimator](https://github.com/michaelsammueller/cost-estimation/assets/34138597/6d03f21c-5bec-4460-a07c-3cb4754afb3b)
+![project_cost_estimator_v2](https://github.com/michaelsammueller/cost-estimation/assets/34138597/131f3a42-c20b-42e4-ba12-2f423cef8a13)
+
