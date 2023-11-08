@@ -21,4 +21,4 @@ This is a proposed class structure for the cost estimator. Note that in this des
 ![project_cost_estimator_v3](https://github.com/michaelsammueller/cost-estimation/assets/34138597/de70003b-d9e1-4873-aaf3-3a140760fcf1)
 
 
-test
+Hi Tarek & Brad
