@@ -15,3 +15,7 @@ For the software aspect of this project, "COCOMO" seems to be the most applicabl
 A basic implementation of "COCOMO" can be found in the `cocomo.py` file within this repository. The code will have to be adjusted to fit our project, depending on which factors we would like to consider.
 
 However, since we are given information about financial cost (for both components and staff), as well as required person-weeks for design and manufacture, I doubt that using a common estimation algorithm would bring any benefit, as such algorithms are mainly used to estimate the amount of time needed to complete such project. It would make more sense to adopt parts of this algorithm and customize it so that we can accept user input in terms of person-weeks, hardware & software components and their costs, and then calculate a total time, total cost, and total difficulty associated with the project. @Team, let me know what you think.
+
+## UML Class Diagram
+This is a proposed class structure for the cost estimator. Note that in this design, we define a HardwareComponent class, a SoftwareComponent class, a StaffMember class, and a ProjectEstimator class.
+![project_cost_estimator](https://github.com/michaelsammueller/cost-estimation/assets/34138597/6d03f21c-5bec-4460-a07c-3cb4754afb3b)
