@@ -93,6 +93,37 @@ class ProjectEstimator:
             total_cost += component["Cost"]
         
         return total_cost
+    
+    def cocomo_estimation(self, loc, mode):
+        """Estimates the project cost using the
+        COCOMO model. It accepts two arguments:
+        1. loc = Lines of Code
+        2. mode = Organic, Semi-Detached, or Embedded"""
+
+        constants = {
+            "Organic": {"a": 2.4, "b": 1.05, "c": 2.5, "d": 0.38},
+            "Semi-Detached": {"a": 3.0, "b": 1.12, "c": 2.5, "d": 0.35},
+            "Embedded": {"a": 3.6, "b": 1.20, "c": 2.5, "d": 0.32},
+        }
+
+        # Validate user input to avoid error later
+        if mode in constants:
+            a, b, c, d = constants[mode].values()
+        else:
+            raise ValueError("Invalid mode selected. Please choose 'Organic', 'Semi-Detached', or 'Embedded'.")
+        
+        # Estimate cost using COCOMO formula
+        effort = a * (loc/1000) ** b
+        development_time = c * (effort**d)
+        staff_required = effort/development_time
+
+        # Average cost of GBP 6,040 per staff per month (Based on resources list)
+        average_monthly_staff_cost = 6040
+
+        # Calculate total cost
+        total_cost = effort * average_monthly_staff_cost
+
+        return total_cost
 
     def write_to_json(self, path):
         """Writes cost estimation to JSON file."""
@@ -147,7 +178,9 @@ print(f"Project Staff: {pe.project_staff}")
 print(f"Software Components: {pe.software_components}")
 print(f"Hardware Components: {pe.hardware_components}")
 
-print(f"Total Staff Cost (GBP): {pe.total_staff_cost()}")
+print(f"Estimated Total Staff Cost (GBP - COCOMO): {round(pe.cocomo_estimation(4000, 'Organic'))}")
+print(f"Actual Total Staff Cost (GBP): {pe.total_staff_cost()}")
 print(f"Total Design Cost (Person-Weeks): {pe.total_design_cost()}")
 print(f"Total Manufacturing Cost (Person-Weeks): {pe.total_manufacturing_cost()}")
-print(f"Total Estimated Project Cost (GBP): {pe.total_project_cost()}")
+print(f"Actual Total Project Cost (GBP): {pe.total_project_cost()}")
+
