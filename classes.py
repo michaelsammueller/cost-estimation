@@ -56,7 +56,7 @@ class ProjectEstimator:
             for capability in component['Required Capabilities']:
                 for staff_title, staff in self.project_staff.items():
                     # Check whether any staff member has the required capability for the selected component
-                    if capability in staff.capabilities and staff.assign_to_task(component['Design Weeks']):
+                    if capability in staff.capabilities and staff.assign_to_task(component['Design Days']):
                         total_cost += staff.get_total_cost()
                         break
         # Looping over hardware components
@@ -65,7 +65,7 @@ class ProjectEstimator:
             for capability in component['Required Capabilities']:
                 for staff_title, staff in self.project_staff.items():
                     # Check whether any staff member has the required capability for the selected component
-                    if capability in staff.capabilities and staff.assign_to_task(component['Design Weeks']):
+                    if capability in staff.capabilities and staff.assign_to_task(component['Design Days']):
                         total_cost += staff.get_total_cost()
                         break
         return total_cost
@@ -79,7 +79,7 @@ class ProjectEstimator:
             for capability in component['Required Capabilities']:
                 for staff_title, staff in self.project_staff.items():
                     # Check whether any staff member has the required capability for the selected component
-                    if capability in staff.capabilities and staff.assign_to_task(component['Manufacturing Weeks']):
+                    if capability in staff.capabilities and staff.assign_to_task(component['Manufacturing Days']):
                         total_cost += staff.get_total_cost()
                         break
         return total_cost
