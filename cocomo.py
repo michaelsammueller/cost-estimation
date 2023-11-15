@@ -12,7 +12,8 @@ def calculate(table, n, mode, size):
         model = 1
     elif size > 300:
         model = 2
-    
+
+
     print(f"The mode is {model}")
 
     # Calculate Effort

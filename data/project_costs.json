@@ -1,0 +1,143 @@
+{
+	"Hardware": [{
+			"type": "Board",
+			"description": "A83-S",
+			"count": 1,
+			"price": 25,
+			"man_cost": 14,
+			"des_cost": 8,
+			"cod_cost": 0,
+			"tes_cost": 1.38
+		},
+		{
+			"type": "CPU",
+			"description": "68k0",
+			"count": 1,
+			"price": 8,
+			"man_cost": 0,
+			"des_cost": 0,
+			"cod_cost": 0,
+			"tes_cost": 0
+		},
+		{
+			"type": "Glue Chip",
+			"description": "G1",
+			"count": 1,
+			"price": 5,
+			"man_cost": 0,
+			"des_cost": 16,
+			"cod_cost": 0,
+			"tes_cost": 2.76
+		},
+		{
+			"type": "Glue Chip",
+			"description": "G2",
+			"count": 1,
+			"price": 5,
+			"man_cost": 0,
+			"des_cost": 16,
+			"cod_cost": 0,
+			"tes_cost": 2.76
+		},
+		{
+			"type": "Glue Chip",
+			"description": "G3",
+			"count": 1,
+			"price": 5,
+			"man_cost": 0,
+			"des_cost": 16,
+			"cod_cost": 0,
+			"tes_cost": 2.76
+		},
+		{
+			"type": "Glue Chip",
+			"description": "G4",
+			"count": 1,
+			"price": 5,
+			"man_cost": 0,
+			"des_cost": 16,
+			"cod_cost": 0,
+			"tes_cost": 2.76
+		},
+		{
+			"type": "RAM",
+			"description": "256KB",
+			"count": 2,
+			"price": 5,
+			"man_cost": 0,
+			"des_cost": 16,
+			"cod_cost": 0,
+			"tes_cost": 2.76
+		}
+	],
+	"Software": [{
+			"type": "OS",
+			"description": "HB/OS in ROM",
+			"count": 1,
+			"price": 0,
+			"man_cost": 0,
+			"des_cost": 9,
+			"cod_cost": 8.85,
+			"tes_cost": 1.38
+
+		},
+		{
+			"type": "OS",
+			"description": "MccOS",
+			"count": 1,
+			"price": 0,
+			"man_cost": 0,
+			"des_cost": 2.25,
+			"cod_cost": 2.95,
+			"tes_cost": 0.15
+		},
+		{
+			"type": "OS",
+			"description": "Libraries and drivers",
+			"count": 1,
+			"price": 0.025,
+			"man_cost": 0,
+			"des_cost": 12.38,
+			"cod_cost": 19.18,
+			"tes_cost": 0.52
+		}
+	],
+	"Resources": [{
+			"role": "Software Architect",
+			"count": 1,
+			"cost": 111,
+			"days": 1
+	},
+		{
+			"role": "Hardware Architect",
+			"count": 1,
+			"cost": 111,
+			"days": 1
+
+		},
+		{
+			"role": "Software Engineer",
+			"count": 1,
+			"cost": 111,
+			"days": 1
+		},
+		{
+			"role": "Hardware Engineer",
+			"count": 1,
+			"cost": 111,
+			"days": 1
+		},
+		{
+			"role": "Project Manager",
+			"count": 1,
+			"cost": 111,
+			"days": 1
+		},
+		{
+			"role": "Project Analyst",
+			"count": 1,
+			"cost": 111,
+			"days": 1
+		}
+]
+}
