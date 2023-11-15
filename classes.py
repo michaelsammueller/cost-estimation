@@ -52,20 +52,24 @@ class ProjectEstimator:
         total_cost = 0
         # Looping over software components
         for component in self.software_components.values():
+            # Convert design weeks to person days
+            design_days = component['Design Weeks'] * 5
             # Allocate staff based on capabilities and available workday balance
             for capability in component['Required Capabilities']:
                 for staff_title, staff in self.project_staff.items():
                     # Check whether any staff member has the required capability for the selected component
-                    if capability in staff.capabilities and staff.assign_to_task(component['Design Days']):
+                    if capability in staff.capabilities and staff.assign_to_task(design_days):
                         total_cost += staff.get_total_cost()
                         break
         # Looping over hardware components
         for component in self.hardware_components.values():
+            # Convert design weeks to person days
+            design_days = component['Design Weeks'] * 5
             # Allcoate staff based on capabilities and available workday balance
             for capability in component['Required Capabilities']:
                 for staff_title, staff in self.project_staff.items():
                     # Check whether any staff member has the required capability for the selected component
-                    if capability in staff.capabilities and staff.assign_to_task(component['Design Weeks']):
+                    if capability in staff.capabilities and staff.assign_to_task(design_days):
                         total_cost += staff.get_total_cost()
                         break
         return total_cost
@@ -75,11 +79,13 @@ class ProjectEstimator:
         in person-weeks.'''
         total_cost = 0
         for component in self.hardware_components.values():
+            # Convert manufacturing weeks to person days
+            manufacturing_days = component['Manufacturing Weeks'] * 5
             # Allocate staff based on capabilities and available workday balance
             for capability in component['Required Capabilities']:
                 for staff_title, staff in self.project_staff.items():
                     # Check whether any staff member has the required capability for the selected component
-                    if capability in staff.capabilities and staff.assign_to_task(component['Manufacturing Weeks']):
+                    if capability in staff.capabilities and staff.assign_to_task(manufacturing_days):
                         total_cost += staff.get_total_cost()
                         break
         return total_cost
