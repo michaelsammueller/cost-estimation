@@ -1,6 +1,6 @@
-"""
+'''
     Includes all classes and methods for the cost estimator
-"""
+'''
 
 class ProjectEstimator:
     def __init__(self):
@@ -9,31 +9,29 @@ class ProjectEstimator:
         self.project_staff = {}
     
     def add_software_component(self, software_component):
-        """Adds software component to software component dictionary."""
+        '''Adds software component to software component dictionary.'''
         self.software_components[software_component.name] = {
             "Cost": software_component.cost,
-            "Design Weeks": software_component.design_weeks
+            "Design Weeks": software_component.design_weeks,
+            "Required Capabilities": software_component.required_capabilities
         }
 
     def add_hardware_component(self, hardware_component):
-        """Adds hardware component to hardware component dictionary."""
+        '''Adds hardware component to hardware component dictionary.'''
         self.hardware_components[hardware_component.name] = {
             "Cost": hardware_component.cost,
             "Design Weeks": hardware_component.design_weeks,
-            "Manufacturing Weeks": hardware_component.manufacturing_weeks
+            "Manufacturing Weeks": hardware_component.manufacturing_weeks,
+            "Required Capabilities": hardware_component.required_capabilities
         }
 
     def add_staff_member(self, staff_member):
-        """Adds staff member to project staff dictionary."""
-        self.project_staff[staff_member.title] = {
-            "Daily Cost": staff_member.cost_per_day,
-            "Employment Type": staff_member.employment_type,
-            "Weeks Assigned": staff_member.weeks_assigned,
-            "Total Cost": staff_member.get_total_cost()
-        }
+        '''Adds staff member to project staff dictionary.'''
+        # Store the entire object in the dicitionary so we can access its attributes later
+        self.project_staff[staff_member.title] = staff_member
 
     def total_software_cost(self, software_components):
-        """Calculates the total software cost."""
+        '''Calculates the total software cost.'''
         total_cost = 0
         for component, cost in software_components:
             total_cost += cost
@@ -41,7 +39,7 @@ class ProjectEstimator:
         return total_cost
 
     def total_hardware_cost(self, hardware_components):
-        """Calculates the total hardware cost."""
+        '''Calculates the total hardware cost.'''
         total_cost = 0
         for component, cost in hardware_components:
             total_cost += cost
@@ -49,42 +47,59 @@ class ProjectEstimator:
         return total_cost
 
     def total_design_cost(self):
-        """Calculates the total cost of the design
-        in person-weeks."""
-        total_weeks = 0
-        for software in self.software_components.values():
-            total_weeks += software["Design Weeks"]
-        
-        for hardware in self.hardware_components.values():
-            total_weeks += hardware["Design Weeks"]
-        
-        return total_weeks
+        '''Calculates the total cost of the design
+        in person-weeks.'''
+        total_cost = 0
+        # Looping over software components
+        for component in self.software_components.values():
+            # Allocate staff based on capabilities and available workday balance
+            for capability in component['Required Capabilities']:
+                for staff_title, staff in self.project_staff.items():
+                    # Check whether any staff member has the required capability for the selected component
+                    if capability in staff.capabilities and staff.assign_to_task(component['Design Weeks']):
+                        total_cost += staff.get_total_cost()
+                        break
+        # Looping over hardware components
+        for component in self.hardware_components.values():
+            # Allcoate staff based on capabilities and available workday balance
+            for capability in component['Required Capabilities']:
+                for staff_title, staff in self.project_staff.items():
+                    # Check whether any staff member has the required capability for the selected component
+                    if capability in staff.capabilities and staff.assign_to_task(component['Design Weeks']):
+                        total_cost += staff.get_total_cost()
+                        break
+        return total_cost
 
     def total_manufacturing_cost(self):
-        """Calculates the total cost of manufacturing
-        in person-weeks."""
-        total_weeks = 0
-        for hardware in self.hardware_components.values():
-            total_weeks += hardware["Manufacturing Weeks"]
-        
-        return total_weeks
+        '''Calculates the total cost of manufacturing
+        in person-weeks.'''
+        total_cost = 0
+        for component in self.hardware_components.values():
+            # Allocate staff based on capabilities and available workday balance
+            for capability in component['Required Capabilities']:
+                for staff_title, staff in self.project_staff.items():
+                    # Check whether any staff member has the required capability for the selected component
+                    if capability in staff.capabilities and staff.assign_to_task(component['Manufacturing Weeks']):
+                        total_cost += staff.get_total_cost()
+                        break
+        return total_cost
 
     def total_staff_cost(self):
-        """Calculates total staff cost based
+        '''Calculates total staff cost based
         on the cost of individual staff members
-        and duration of assignment."""
+        and duration of assignment.'''
         total_cost = 0
         for staff_member in self.project_staff.values():
-            total_cost += staff_member["Total Cost"]
+            total_cost += staff_member.get_total_cost()
 
         return total_cost
             
     def total_project_cost(self):
-        """Calculates the total monetary cost of the project,
-        including staff cost, hardware cost, and software cost."""
+        '''Calculates the total monetary cost of the project,
+        including staff cost, hardware cost, and software cost.'''
         total_cost = 0
         for staff_member in self.project_staff.values():
-            total_cost += staff_member["Total Cost"]
+            total_cost += staff_member.get_total_cost()
         
         for component in self.hardware_components.values():
             total_cost += component["Cost"]
@@ -95,10 +110,10 @@ class ProjectEstimator:
         return total_cost
     
     def cocomo_estimation(self, loc, mode):
-        """Estimates the project cost using the
+        '''Estimates the project cost using the
         COCOMO model. It accepts two arguments:
         1. loc = Lines of Code
-        2. mode = Organic, Semi-Detached, or Embedded"""
+        2. mode = Organic, Semi-Detached, or Embedded'''
 
         constants = {
             "Organic": {"a": 2.4, "b": 1.05, "c": 2.5, "d": 0.38},
@@ -126,46 +141,57 @@ class ProjectEstimator:
         return total_cost
 
     def write_to_json(self, path):
-        """Writes cost estimation to JSON file."""
+        '''Writes cost estimation to JSON file.'''
         pass
 
     def read_json(self, path):
-        """Reads cost estimation from JSON file."""
+        '''Reads cost estimation from JSON file.'''
         pass
 
 class HardwareComponent:
-    def __init__(self, name, cost, design_weeks, manufacturing_weeks):
+    def __init__(self, name, cost, design_weeks, manufacturing_weeks, capabilities):
         self.name = name
         self.cost = cost * 1000  # Cost per quantity thousand
         self.design_weeks = design_weeks  # Weeks needed to design the component
         self.manufacturing_weeks = manufacturing_weeks  # Weeks needed to manufacture the component
+        self.required_capabilities = set(capabilities)
 
 class SoftwareComponent:
-    def __init__(self, name, cost, design_weeks):
+    def __init__(self, name, cost, design_weeks, capabilities):
         self.name = name
         self.cost = cost
         self.design_weeks = design_weeks  # Weeks needed to manufacture the component
+        self.required_capabilities = set(capabilities)
 
 class StaffMember:
-    def __init__(self, title, cost_per_day, employment_type, weeks_assigned):
+    def __init__(self, title, cost_per_day, employment_type, capabilities):
         self.title = title  # Job Title
         self.cost_per_day = cost_per_day
         self.employment_type = employment_type  # In-House or Agency
-        self.weeks_assigned = weeks_assigned  # Amount of weeks assigned to the job
-        self.total_cost = (cost_per_day * 7) * weeks_assigned
+        self.workday_cap = 260  # Days
+        self.capabilities = set(capabilities)
+        self.workdays_used = 0
+    
+    def assign_to_task(self, days_required):
+        '''Assigns staff member to a task for a specific number of days.'''
+        # Use the counter object to check if enough days are available
+        if self.workdays_used + days_required <= self.workday_cap:
+            self.workdays_used += days_required
+            return True
+        return False
     
     def get_total_cost(self):
-        """Returns the cost for assigned duration"""
-        return self.total_cost
+        '''Returns the cost for assigned duration'''
+        return self.cost_per_day * self.workdays_used
 
 
 # Temporary Tests
 pe = ProjectEstimator()
-hwa = StaffMember("Hardware Architect", 250, "In-House", 20)
-swa = StaffMember("Software Architect", 450, "Agency", 20)
-synful_kernel = SoftwareComponent("Synful Kernel", 0, 2)
-cpu1 = HardwareComponent("68k0", 8, 0, 0)
-board_sldr = HardwareComponent("A83", 15, 8, 10)
+hwa = StaffMember("Hardware Architect", 250, "In-House", ["Hardware Design", "Manufacture"])
+swa = StaffMember("Software Architect", 450, "Agency", ["Software Design"])
+synful_kernel = SoftwareComponent("Synful Kernel", 0, 2, ["Software Design"])
+cpu1 = HardwareComponent("68k0", 8, 0, 0, ["Hardware Design"])
+board_sldr = HardwareComponent("A83", 15, 8, 10, ["Hardware Design"])
 
 
 pe.add_staff_member(hwa)
@@ -173,6 +199,8 @@ pe.add_staff_member(swa)
 pe.add_software_component(synful_kernel)
 pe.add_hardware_component(cpu1)
 pe.add_hardware_component(board_sldr)
+swa.assign_to_task(20)
+hwa.assign_to_task(40)
 
 print(f"Project Staff: {pe.project_staff}")
 print(f"Software Components: {pe.software_components}")
