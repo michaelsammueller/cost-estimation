@@ -1,8 +1,11 @@
-from cmd import * # for importing cmd inputs
+from cmd import *  # for importing cmd inputs
 import os
 import json
+import pandas as pd
 
+data = {}
 files = []  # list for file selection
+
 
 class UserInputs(Cmd):
     """Class to contain main terminal options by using the do_ commands to record user input"""
@@ -37,11 +40,33 @@ class UserInputs(Cmd):
 
         else:
             print("File not in the directory!")
-            do_ld()
+
+    def do_pd(self, *args):
+        """ A function to  interpret .json files """
+        global data
+
+        hardware = data['Hardware']
+        software = data['Software']
+        resources = data['Resources']
+        print(hardware)
+
+        table = pd.DataFrame([[key] + list(value) for key, value in hardware.items()],
+                             columns=["Type", "Description", "Count", "Price", "Mfg. Cost", "Design Cost",
+                                      "Coding Cost", "Testing Cost", "Total"])
+
+        print(table)
+
+        # # The next step is to iterate over the data in the Json file to assign values to the tree nodes.
+        # j_data = file1["data"]  # to iterate on the number of data present in the json file.
+        # print(data_len)
+        # main_root = data['root']['name']  # storing the name of the root node
+        # node_names = list(data.keys())  # converting all the keys in the json to iterable list
+        # hardware = data["Hardware"]
+        # software = data["Software"]
 
 
 def main_menu():
-    print(10 * "=" + " " + "Synful Computing Cost Calculator:"+ " " + 10 * "=")
+    print(10 * "=" + " " + "Synful Computing Cost Calculator:" + " " + 10 * "=")
 
 
 def menu():
@@ -60,4 +85,3 @@ def menu():
 main_menu()
 menu()
 UserInputs().cmdloop()
-
