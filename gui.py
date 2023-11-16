@@ -59,6 +59,7 @@ class GuiMain:
 
     def new_calc(self):
         """ Function for attempting new calculation by selection json file """
+        
 
     def existing_calc(self):
         """ Function for calculated by existing json file """
@@ -71,6 +72,10 @@ class GuiMain:
 
     def import_json(self):
         """Calculates total cost"""
+        
+    def about_box(self):
+        """dsd"""
+        
 
 
 start = GuiMain()
