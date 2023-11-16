@@ -13,7 +13,7 @@ class ProjectEstimator:
         self.software_components[software_component.name] = {
             "Cost": software_component.cost,
             "Design Weeks": software_component.design_weeks,
-            "Required Capabilities": software_component.required_capabilities
+            "Required Skills": software_component.required_skills
         }
 
     def add_hardware_component(self, hardware_component):
@@ -22,7 +22,7 @@ class ProjectEstimator:
             "Cost": hardware_component.cost,
             "Design Weeks": hardware_component.design_weeks,
             "Manufacturing Weeks": hardware_component.manufacturing_weeks,
-            "Required Capabilities": hardware_component.required_capabilities
+            "Required Skills": hardware_component.required_skills
         }
 
     def add_staff_member(self, staff_member):
@@ -42,50 +42,50 @@ class ProjectEstimator:
         '''Calculates the total hardware cost.'''
         total_cost = 0
         for component, cost in hardware_components:
-            total_cost += cost
+            total_cost += cost * 1000  # Quanitity thousand
         
         return total_cost
 
     def total_design_cost(self):
         '''Calculates the total cost of the design
-        in person-weeks.'''
+        in GBP.'''
         total_cost = 0
         # Looping over software components
         for component in self.software_components.values():
             # Convert design weeks to person days
             design_days = component['Design Weeks'] * 5
-            # Allocate staff based on capabilities and available workday balance
-            for capability in component['Required Capabilities']:
+            # Allocate staff based on skills and available workday balance
+            for skill in component['Required Skills']:
                 for staff_title, staff in self.project_staff.items():
-                    # Check whether any staff member has the required capability for the selected component
-                    if capability in staff.capabilities and staff.assign_to_task(design_days):
+                    # Check whether any staff member has the required skill for the selected component
+                    if skill in staff.skills and staff.assign_to_task(design_days):
                         total_cost += staff.get_total_cost()
                         break
         # Looping over hardware components
         for component in self.hardware_components.values():
             # Convert design weeks to person days
             design_days = component['Design Weeks'] * 5
-            # Allcoate staff based on capabilities and available workday balance
-            for capability in component['Required Capabilities']:
+            # Allocate staff based on skills and available workday balance
+            for skill in component['Required Skills']:
                 for staff_title, staff in self.project_staff.items():
-                    # Check whether any staff member has the required capability for the selected component
-                    if capability in staff.capabilities and staff.assign_to_task(design_days):
+                    # Check whether any staff member has the required skill for the selected component
+                    if skill in staff.skills and staff.assign_to_task(design_days):
                         total_cost += staff.get_total_cost()
                         break
         return total_cost
 
     def total_manufacturing_cost(self):
         '''Calculates the total cost of manufacturing
-        in person-weeks.'''
+        in GBP.'''
         total_cost = 0
         for component in self.hardware_components.values():
             # Convert manufacturing weeks to person days
             manufacturing_days = component['Manufacturing Weeks'] * 5
-            # Allocate staff based on capabilities and available workday balance
-            for capability in component['Required Capabilities']:
+            # Allocate staff based on skills and available workday balance
+            for skill in component['Required Skills']:
                 for staff_title, staff in self.project_staff.items():
-                    # Check whether any staff member has the required capability for the selected component
-                    if capability in staff.capabilities and staff.assign_to_task(manufacturing_days):
+                    # Check whether any staff member has the required skill for the selected component
+                    if skill in staff.skills and staff.assign_to_task(manufacturing_days):
                         total_cost += staff.get_total_cost()
                         break
         return total_cost
@@ -155,27 +155,27 @@ class ProjectEstimator:
         pass
 
 class HardwareComponent:
-    def __init__(self, name, cost, design_weeks, manufacturing_weeks, capabilities):
+    def __init__(self, name, cost, design_weeks, manufacturing_weeks, skills):
         self.name = name
         self.cost = cost * 1000  # Cost per quantity thousand
         self.design_weeks = design_weeks  # Weeks needed to design the component
         self.manufacturing_weeks = manufacturing_weeks  # Weeks needed to manufacture the component
-        self.required_capabilities = set(capabilities)
+        self.required_skills = set(skills)
 
 class SoftwareComponent:
-    def __init__(self, name, cost, design_weeks, capabilities):
+    def __init__(self, name, cost, design_weeks, skills):
         self.name = name
         self.cost = cost
         self.design_weeks = design_weeks  # Weeks needed to manufacture the component
-        self.required_capabilities = set(capabilities)
+        self.required_skills = set(skills)
 
 class StaffMember:
-    def __init__(self, title, cost_per_day, employment_type, capabilities):
+    def __init__(self, title, cost_per_day, employment_type, skills):
         self.title = title  # Job Title
         self.cost_per_day = cost_per_day
         self.employment_type = employment_type  # In-House or Agency
         self.workday_cap = 260  # Days
-        self.capabilities = set(capabilities)
+        self.skills = set(skills)
         self.workdays_used = 0
     
     def assign_to_task(self, days_required):
@@ -197,24 +197,23 @@ hwa = StaffMember("Hardware Architect", 250, "In-House", ["Hardware Design", "Ma
 swa = StaffMember("Software Architect", 450, "Agency", ["Software Design"])
 synful_kernel = SoftwareComponent("Synful Kernel", 0, 2, ["Software Design"])
 cpu1 = HardwareComponent("68k0", 8, 0, 0, ["Hardware Design"])
-board_sldr = HardwareComponent("A83", 15, 8, 10, ["Hardware Design"])
+# board_sldr = HardwareComponent("A83", 15, 8, 10, ["Hardware Design"])
 
 
 pe.add_staff_member(hwa)
 pe.add_staff_member(swa)
 pe.add_software_component(synful_kernel)
 pe.add_hardware_component(cpu1)
-pe.add_hardware_component(board_sldr)
-swa.assign_to_task(20)
-hwa.assign_to_task(40)
+# pe.add_hardware_component(board_sldr)
 
 print(f"Project Staff: {pe.project_staff}")
 print(f"Software Components: {pe.software_components}")
 print(f"Hardware Components: {pe.hardware_components}")
 
 print(f"Estimated Total Staff Cost (GBP - COCOMO): {round(pe.cocomo_estimation(4000, 'Organic'))}")
+print(f"Total Design Cost (GBP): {pe.total_design_cost()}")
+print(f"Total Manufacturing Cost (GBP): {pe.total_manufacturing_cost()}")
 print(f"Actual Total Staff Cost (GBP): {pe.total_staff_cost()}")
-print(f"Total Design Cost (Person-Weeks): {pe.total_design_cost()}")
-print(f"Total Manufacturing Cost (Person-Weeks): {pe.total_manufacturing_cost()}")
 print(f"Actual Total Project Cost (GBP): {pe.total_project_cost()}")
+
 
