@@ -33,6 +33,7 @@ class UserInputs(Cmd):
             # syntax used to open json file
             with open(f'data/{file_name_input}', 'r') as file1:
                 data = json.load(file1)
+                print(data)
                 print("Json File Loaded")  # test if the file is loaded
 
         elif file_name_input == "ext":
@@ -50,9 +51,9 @@ class UserInputs(Cmd):
         resources = data['Resources']
         print(hardware)
 
-        table = pd.DataFrame([[key] + list(value) for key, value in hardware.items()],
-                             columns=["Type", "Description", "Count", "Price", "Mfg. Cost", "Design Cost",
-                                      "Coding Cost", "Testing Cost", "Total"])
+        table = pd.DataFrame([[value for key, value in item.items()] for item in hardware],
+                             columns = ["Type", "Description", "Count", "Price", "Mfg. Cost", "Design Cost",
+                   "Coding Cost", "Testing Cost"])
 
         print(table)
 
