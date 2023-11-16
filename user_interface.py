@@ -57,13 +57,6 @@ class UserInputs(Cmd):
 
         print(table)
 
-        # # The next step is to iterate over the data in the Json file to assign values to the tree nodes.
-        # j_data = file1["data"]  # to iterate on the number of data present in the json file.
-        # print(data_len)
-        # main_root = data['root']['name']  # storing the name of the root node
-        # node_names = list(data.keys())  # converting all the keys in the json to iterable list
-        # hardware = data["Hardware"]
-        # software = data["Software"]
 
 
 def main_menu():
