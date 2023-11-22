@@ -114,6 +114,9 @@ class GuiMain:
             initialdir="/",
             title="Upload .Json",
             filetypes=((".json files", "*.json"), ("All files", "*.*")), )
+        
+        # step 1.5 clear table if it already exists
+        self.table_clear(True)
 
         # step 2 loading data from .json
         with open(json_file, 'r') as file1:
@@ -137,10 +140,10 @@ class GuiMain:
             self.table_view.insert(parent, 'end', text=key, values=(value,))
 
 
-    def table_clear(self):
+    def table_clear(self, skip=False):
         """ Function for clearing all the data in table  """
-
-        confirmed = messagebox.askyesno("confirmation", "This will clear all the table data. continue?")
+        if not skip:
+            confirmed = messagebox.askyesno("confirmation", "This will clear all the table data. continue?")
         # Delete all items from the tabl/treeview
         self.table_view.delete(*self.table_view.get_children())
         # Clear the JSON data
