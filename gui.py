@@ -174,8 +174,15 @@ class GuiMain:
 
             # Update the table or treeview
             self.table_view.item(selected_item, values=(new_value,))
+
+            # Get path to field
+            parent_id = self.table_view.parent(selected_item)
+            grandparent_id = self.table_view.parent(parent_id)
+            index = int(self.table_view.item(parent_id)["text"])
+            kind = self.table_view.item(grandparent_id)["text"]
+
             # Update the JSON data
-            self.update(key, new_value)
+            self.update(kind, index, key, new_value)
 
     def add(self):
         """ Function for adding keys and values to the table """
@@ -192,19 +199,11 @@ class GuiMain:
         # Update the JSON data
         self.update(new_key, new_value)
 
-    def update(self, key, new_value):
+    def update(self, kind, index, key, new_value):
         """ Function for updating the added key and values to the table"""
         # Update the JSON data with the new value
-        keys = key.split('.')
-        data = self.json_data
-        for k in keys[:-1]:
-            if k.isdigit():  # If the key is a digit, treat it as a list index
-                k = int(k)
-            data = data[k]
-        last_key = keys[-1]
-        if last_key.isdigit():
-            last_key = int(last_key)
-        data[last_key] = new_value
+        self.json_data[kind][index][key] = new_value
+
 
     def delete(self):
         selected_item = self.table_view.selection()
