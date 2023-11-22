@@ -8,7 +8,8 @@
 			"design_cost": 8,
 			"coding_cost": 0,
 			"testing_cost": 1.38,
-			"skill_1_needed": "Test"
+			"skill_1_needed": "design",
+			"skill_2_needed": "test"
 		},
 		{
 			"type": "CPU",
@@ -29,7 +30,8 @@
 			"design_cost": 16,
 			"coding_cost": 0,
 			"testing_cost": 2.76,
-			"skill_1_needed": "design"
+			"skill_1_needed": "design",
+			"skill_2_needed": "test"
 		},
 		{
 			"type": "Glue Chip",
@@ -39,7 +41,9 @@
 			"manufacturing_cost": 0,
 			"design_cost": 16,
 			"coding_cost": 0,
-			"testing_cost": 2.76
+			"testing_cost": 2.76,
+			"skill_1_needed": "design",
+			"skill_2_needed": "test"
 		},
 		{
 			"type": "Glue Chip",
@@ -49,7 +53,9 @@
 			"manufacturing_cost": 0,
 			"design_cost": 16,
 			"coding_cost": 0,
-			"testing_cost": 2.76
+			"testing_cost": 2.76,
+			"skill_1_needed": "design",
+			"skill_2_needed": "test"
 		},
 		{
 			"type": "Glue Chip",
@@ -59,7 +65,9 @@
 			"manufacturing_cost": 0,
 			"design_cost": 16,
 			"coding_cost": 0,
-			"testing_cost": 2.76
+			"testing_cost": 2.76,
+			"skill_1_needed": "design",
+			"skill_2_needed": "test"
 		},
 		{
 			"type": "RAM",
@@ -69,7 +77,9 @@
 			"manufacturing_cost": 0,
 			"design_cost": 16,
 			"coding_cost": 0,
-			"testing_cost": 2.76
+			"testing_cost": 2.76,
+			"skill_1_needed": "design",
+			"skill_2_needed": "test"
 		}
 	],
 	"Software": [{
@@ -81,7 +91,10 @@
 			"design_cost": 9,
 			"coding_cost": 8.85,
 			"testing_cost": 1.38,
-			"lines_of_code": 100
+			"lines_of_code": 100,
+			"skill_1_needed": "code",
+			"skill_2_needed": "test",
+			"skill_3_needed": "design"
 
 		},
 		{
@@ -107,7 +120,10 @@
 			"design_cost": 12.38,
 			"coding_cost": 19.18,
 			"testing_cost": 0.52,
-			"lines_of_code": 100
+			"lines_of_code": 100,
+			"skill_1_needed": "code",
+			"skill_2_needed": "test",
+			"skill_3_needed": "design"
 		}
 	],
 	"Resources": [{
