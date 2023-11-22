@@ -60,7 +60,7 @@ class GuiMain:
         menu.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Open", command=lambda: self.select_json())
         file_menu.add_command(label="New", command=lambda: self.table_clear())
-        file_menu.add_command(label="Save", command=self.save())
+        file_menu.add_command(label="Save", command=self.save)
         file_menu.add_command(label="About", command=lambda: self.about_window())
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.root.destroy)
