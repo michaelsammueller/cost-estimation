@@ -28,7 +28,8 @@
 			"manufacturing_cost": 0,
 			"design_cost": 16,
 			"coding_cost": 0,
-			"testing_cost": 2.76
+			"testing_cost": 2.76,
+			"skill_1_needed": "design"
 		},
 		{
 			"type": "Glue Chip",
@@ -92,7 +93,10 @@
 			"design_cost": 2.25,
 			"coding_cost": 2.95,
 			"testing_cost": 0.15,
-			"lines_of_code": 100
+			"lines_of_code": 100,
+			"skill_1_needed": "code",
+			"skill_2_needed": "test",
+			"skill_3_needed": "design"
 		},
 		{
 			"type": "OS",
@@ -212,7 +216,7 @@
 			"type": "internal",
 			"count": 1,
 			"cost": 175,
-			"days": 1,
+			"days": 0,
 			"skill_1": "update",
 			"skill_2": "replan",
 			"skill_3": "resourcing"

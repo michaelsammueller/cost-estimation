@@ -61,10 +61,9 @@ class GuiMain:
         file_menu.add_command(label="Open", command=lambda: self.select_json())
         file_menu.add_command(label="New", command=lambda: self.table_clear())
         file_menu.add_command(label="Save", command=self.save())
-        file_menu.add_command(label="Help", command=lambda: self.about_window())
+        file_menu.add_command(label="About", command=lambda: self.about_window())
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.root.destroy)
-
 
         # Input field to change .json values
         self.key_label = tk.Label(self.frame_bot, text='KEY COMPONENT', bg='White')
@@ -95,7 +94,7 @@ class GuiMain:
         self.atsc_entry.grid(row=1, column=7, padx=5, pady=20)
 
     def about_window(self):
-        about_window = messagebox.showinfo("Help", " Welcome to the Synful Computing Cost Calculator App "
+        about_window = messagebox.showinfo("About", " Welcome to the Synful Computing Cost Calculator App "
                                                    "\n(UOE / Group 3)" 
                                                    "\n _________________________________________________"
                                                    "\nUpload Json = To preview data in Table View"
@@ -135,7 +134,6 @@ class GuiMain:
                 self.table_fill(str(i), item, parent_id)
         else:
             self.table_view.insert(parent, 'end', text=key, values=(value,))
-
 
     def table_clear(self):
         """ Function for clearing all the data in table  """
@@ -194,17 +192,32 @@ class GuiMain:
 
     def update(self, key, new_value):
         """ Function for updating the added key and values to the table"""
+
         # Update the JSON data with the new value
         keys = key.split('.')
         data = self.json_data
+
         for k in keys[:-1]:
-            if k.isdigit():  # If the key is a digit, treat it as a list index
-                k = int(k)
-            data = data[k]
+            if isinstance(data, dict):
+                data = data.get(k, {})
+            elif isinstance(data, list):
+                try:
+                    k = int(k)
+                    data = data[k]
+                except (ValueError, IndexError):
+                    # Handle invalid index or key
+                    return
+
         last_key = keys[-1]
-        if last_key.isdigit():
-            last_key = int(last_key)
-        data[last_key] = new_value
+        if isinstance(data, dict):
+            data[last_key] = new_value
+        elif isinstance(data, list):
+            try:
+                last_key = int(last_key)
+                data[last_key] = new_value
+            except (ValueError, IndexError):
+                # Handle invalid index
+                return
 
     def delete(self):
         selected_item = self.table_view.selection()
