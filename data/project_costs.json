@@ -7,7 +7,8 @@
 			"manufacturing_cost": 14,
 			"design_cost": 8,
 			"coding_cost": 0,
-			"testing_cost": 1.38
+			"testing_cost": 1.38,
+			"skill_1_needed": "Test"
 		},
 		{
 			"type": "CPU",
