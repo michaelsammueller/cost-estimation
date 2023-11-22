@@ -43,19 +43,32 @@ class UserInputs(Cmd):
             print("File not in the directory!")
 
     def do_pd(self, *args):
-        """ A function to  interpret .json files """
+        """ A function to  interpret and print .json files data"""
         global data
 
+        # assigning the data dic a variable
         hardware = data['Hardware']
         software = data['Software']
         resources = data['Resources']
-        print(hardware)
 
-        table = pd.DataFrame([[value for key, value in item.items()] for item in hardware],
-                             columns = ["Type", "Description", "Count", "Price", "Mfg. Cost", "Design Cost",
-                   "Coding Cost", "Testing Cost"])
+        # Using Pandas dataframe method to display the tables in the terminal
+        hw_table = pd.DataFrame([[value for key, value in item.items()] for item in hardware],
+                                columns=["Type", "Description", "Count", "Price", "Mfg. Cost", "Design Cost",
+                                         "Coding Cost", "Testing Cost"])
 
-        print(table)
+        sw_table = pd.DataFrame([[value for key, value in item.items()] for item in software],
+                                columns=["Type", "Description", "Count", "Price", "Mfg. Cost", "Design Cost",
+                                         "Coding Cost", "Testing Cost"])
+
+        res_table = pd.DataFrame([[value for key, value in item.items()] for item in resources],
+                                 columns=["role", "count", "cost", "days"])
+
+        print(20 * "-", " Hardware Components", 20 * "-")
+        print(hw_table)
+        print(20 * "-", " Software Components", 20 * "-")
+        print(sw_table)
+        print(20 * "-", " Resources", 20 * "-")
+        print(res_table)
 
 
 
@@ -70,8 +83,6 @@ def menu():
     ld = Loads .json file in directory. 
     pd = previews current Hardware, Software Components and resources in the .json file 
     clc = calculates and previews total costs of Hardware, Software, and resources. 
-    edt = edits json data for adding new components and resources. Can also modify costs. 
-    exp = Exports modified data to a new .json file
     ext = Terminates program. 
     """)
 
