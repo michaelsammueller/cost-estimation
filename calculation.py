@@ -206,11 +206,13 @@ class ProjectEstimator:
 
     def total_system_cost(self):
         '''Calculate the total cost of the system in GBP.'''
+        hardware_cost = self.total_hardware_cost()
+        software_cost = self.total_software_cost()
         design_cost = self.total_design_cost()
         manufacturing_cost = self.total_manufacturing_cost()
         coding_cost = self.total_coding_cost()
         testing_cost = self.total_testing_cost()
-        return (design_cost + manufacturing_cost + coding_cost + testing_cost) * 2
+        return (hardware_cost + software_cost + design_cost + manufacturing_cost + coding_cost + testing_cost) * 2
     
     def cost_per_system(self):
         '''Calculate the cost per system in GBP.'''
@@ -325,6 +327,6 @@ class StaffMember:
 # Tests
 pe = ProjectEstimator()
 pe.read_json_data(json_data)
-print(pe.total_system_cost())
-print(pe.cost_per_system())
-print(pe.resources)
+print(f'Total System Cost (2000): {pe.total_system_cost()}')
+print(f'Cost per System: {pe.cost_per_system()}')
+# print(pe.resources)
