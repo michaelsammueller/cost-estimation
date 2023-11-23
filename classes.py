@@ -2,6 +2,35 @@
     Includes all classes and methods for the cost estimator
 '''
 
+# Imports
+import json
+
+# Test Data
+# TODO: REMOVE LATER
+
+json_data = {'Hardware': [{'type': 'Board', 'description': 'A83-S', 'count': 1, 'price': 25, 'manufacturing_cost': 14, 'design_cost': 8, 'coding_cost': 0, 'testing_cost': 1.38, 'skill_1_needed': 'design', 'skill_2_needed': 'test'}, 
+                          {'type': 'CPU', 'description': '68k0', 'count': 1, 'price': 8, 'manufacturing_cost': 0, 'design_cost': 0, 'coding_cost': 0, 'testing_cost': 0}, 
+                          {'type': 'Glue Chip', 'description': 'G1', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'design', 'skill_2_needed': 'test'}, 
+                          {'type': 'Glue Chip', 'description': 'G2', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'design', 'skill_2_needed': 'test'}, 
+                          {'type': 'Glue Chip', 'description': 'G3', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'design', 'skill_2_needed': 'test'}, 
+                          {'type': 'Glue Chip', 'description': 'G4', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'design', 'skill_2_needed': 'test'}, 
+                          {'type': 'RAM', 'description': '256KB', 'count': 2, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'design', 'skill_2_needed': 'test'}], 
+                          'Software': [{'type': 'OS', 'description': 'HB/OS in ROM', 'count': 1, 'price': 0, 'manufacturing_cost': 0, 'design_cost': 9, 'coding_cost': 8.85, 'testing_cost': 1.38, 'lines_of_code': 100, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'design'}, 
+                                       {'type': 'OS', 'description': 'MccOS', 'count': 1, 'price': 0, 'manufacturing_cost': 0, 'design_cost': 2.25, 'coding_cost': 2.95, 'testing_cost': 0.15, 'lines_of_code': 100, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'design'}, 
+                                       {'type': 'OS', 'description': 'Libraries and drivers', 'count': 1, 'price': 0.025, 'manufacturing_cost': 0, 'design_cost': 12.38, 'coding_cost': 19.18, 'testing_cost': 0.52, 'lines_of_code': 100, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'design'}], 
+                                       'Resources': [{'role': 'Software Architect', 'type': 'internal', 'count': 1, 'cost': 250, 'days': 0, 'skill_1': 'design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, 
+                                                     {'role': 'Software Architect', 'type': 'Agency', 'count': 1, 'cost': 400, 'days': 0, 'skill_1': 'design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, 
+                                                     {'role': 'Hardware Architect', 'count': 1, 'type': 'Internal', 'cost': 300, 'days': 0, 'skill_1': 'design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, 
+                                                     {'role': 'Hardware Architect', 'count': 1, 'type': 'Agency', 'cost': 450, 'days': 0, 'skill_1': 'design', 'skill_2': 'fault finding', 'skill_3': 'coding'}, 
+                                                     {'role': 'Software Engineer', 'type': 'internal', 'count': 1, 'cost': 195, 'days': 0, 'skill_1': 'code', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, 
+                                                     {'role': 'Software Engineer', 'type': 'Agency', 'count': 1, 'cost': 295, 'days': 0, 'skill_1': 'code', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, 
+                                                     {'role': 'Hardware Engineer', 'type': 'internal', 'count': 1, 'cost': 175, 'days': 0, 'skill_1': 'build', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, 
+                                                     {'role': 'Hardware Engineer', 'type': 'Agency', 'count': 1, 'cost': 275, 'days': 0, 'skill_1': 'build', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, 
+                                                     {'role': 'Project Manager', 'type': 'internal', 'count': 1, 'cost': 275, 'days': 0, 'skill_1': 'plan', 'skill_2': 'manage', 'skill_3': 'cost'}, 
+                                                     {'role': 'Project Manager', 'type': 'Agency', 'count': 1, 'cost': 450, 'days': 0, 'skill_1': 'plan', 'skill_2': 'manage', 'skill_3': 'cost'}, 
+                                                     {'role': 'Project Analyst', 'type': 'internal', 'count': 1, 'cost': 175, 'days': 0, 'skill_1': 'update', 'skill_2': 'replan', 'skill_3': 'resourcing'}, 
+                                                     {'role': 'Project Analyst', 'type': 'Agency', 'count': 1, 'cost': 250, 'days': 0, 'skill_1': 'update', 'skill_2': 'replan', 'skill_3': 'resourcing'}]}
+
 class ProjectEstimator:
     def __init__(self):
         self.software_components = {}
@@ -146,13 +175,18 @@ class ProjectEstimator:
 
         return total_cost
 
-    def write_to_json(self, path):
-        '''Writes cost estimation to JSON file.'''
-        pass
+    def read_json(self, json_data):
+        '''Retrieves data from JSON data.'''
 
-    def read_json(self, path):
-        '''Reads cost estimation from JSON file.'''
-        pass
+        for hw in json_data["Hardware"]:
+            self.add_hardware_component(HardwareComponent(
+                hw["Name"],
+                hw["Cost"],
+                hw["Design Weeks"],
+                hw["Manufacturing Weeks"],
+                hw["Required Skills"]
+            )) # Adjust individual names to match JSON data, and create same loop for all components
+
 
 class HardwareComponent:
     def __init__(self, name, cost, design_weeks, manufacturing_weeks, skills):
@@ -193,27 +227,27 @@ class StaffMember:
 
 # Temporary Tests
 pe = ProjectEstimator()
-hwa = StaffMember("Hardware Architect", 250, "In-House", ["Hardware Design", "Manufacture"])
-swa = StaffMember("Software Architect", 450, "Agency", ["Software Design"])
-synful_kernel = SoftwareComponent("Synful Kernel", 0, 2, ["Software Design"])
-cpu1 = HardwareComponent("68k0", 8, 0, 0, ["Hardware Design"])
+# hwa = StaffMember("Hardware Architect", 250, "In-House", ["Hardware Design", "Manufacture"])
+# swa = StaffMember("Software Architect", 450, "Agency", ["Software Design"])
+# synful_kernel = SoftwareComponent("Synful Kernel", 0, 2, ["Software Design"])
+# cpu1 = HardwareComponent("68k0", 8, 0, 0, ["Hardware Design"])
 # board_sldr = HardwareComponent("A83", 15, 8, 10, ["Hardware Design"])
 
 
-pe.add_staff_member(hwa)
-pe.add_staff_member(swa)
-pe.add_software_component(synful_kernel)
-pe.add_hardware_component(cpu1)
+# pe.add_staff_member(hwa)
+# pe.add_staff_member(swa)
+# pe.add_software_component(synful_kernel)
+# pe.add_hardware_component(cpu1)
 # pe.add_hardware_component(board_sldr)
 
-print(f"Project Staff: {pe.project_staff}")
-print(f"Software Components: {pe.software_components}")
-print(f"Hardware Components: {pe.hardware_components}")
+# print(f"Project Staff: {pe.project_staff}")
+# print(f"Software Components: {pe.software_components}")
+# print(f"Hardware Components: {pe.hardware_components}")
 
-print(f"Estimated Total Staff Cost (GBP - COCOMO): {round(pe.cocomo_estimation(4000, 'Organic'))}")
-print(f"Total Design Cost (GBP): {pe.total_design_cost()}")
-print(f"Total Manufacturing Cost (GBP): {pe.total_manufacturing_cost()}")
-print(f"Actual Total Staff Cost (GBP): {pe.total_staff_cost()}")
-print(f"Actual Total Project Cost (GBP): {pe.total_project_cost()}")
+# print(f"Estimated Total Staff Cost (GBP - COCOMO): {round(pe.cocomo_estimation(4000, 'Organic'))}")
+# print(f"Total Design Cost (GBP): {pe.total_design_cost()}")
+# print(f"Total Manufacturing Cost (GBP): {pe.total_manufacturing_cost()}")
+# print(f"Actual Total Staff Cost (GBP): {pe.total_staff_cost()}")
+# print(f"Actual Total Project Cost (GBP): {pe.total_project_cost()}")
 
 
