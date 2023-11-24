@@ -5,7 +5,7 @@
 # Test Data
 # TODO: Remove test data
 
-json_data = {'Hardware': [{'type': 'Board', 'description': 'A83-S', 'count': 1, 'price': 25, 'manufacturing_cost': 14, 'design_cost': 8, 'coding_cost': 0, 'testing_cost': 1.38, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test', 'skill_3_needed': 'build'}, {'type': 'CPU', 'description': '68k0', 'count': 1, 'price': 8, 'manufacturing_cost': 0, 'design_cost': 0, 'coding_cost': 0, 'testing_cost': 0}, {'type': 'Glue Chip', 'description': 'G1', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'Glue Chip', 'description': 'G2', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'Glue Chip', 'description': 'G3', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'Glue Chip', 'description': 'G4', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'RAM', 'description': '256KB', 'count': 2, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}], 'Software': [{'type': 'OS', 'description': 'HB/OS in ROM', 'count': 1, 'price': 0, 'manufacturing_cost': 0, 'design_cost': 9, 'coding_cost': 8.85, 'testing_cost': 1.38, 'lines_of_code': 100, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'software design'}, {'type': 'OS', 'description': 'MccOS', 'count': 1, 'price': 0, 'manufacturing_cost': 0, 'design_cost': 2.25, 'coding_cost': 2.95, 'testing_cost': 0.15, 'lines_of_code': 100, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'software design'}, {'type': 'OS', 'description': 'Libraries and drivers', 'count': 1, 'price': 25, 'manufacturing_cost': 0, 'design_cost': 12.38, 'coding_cost': 19.18, 'testing_cost': 0.52, 'lines_of_code': 100, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'software design'}], 'Resources': [{'role': 'Software Architect', 'type': 'Internal', 'count': 1, 'cost': 250, 'days': 0, 'skill_1': 'software design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, {'role': 'Software Architect', 'type': 'Agency', 'count': 1, 'cost': 400, 'days': 0, 'skill_1': 'software design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, {'role': 'Hardware Architect', 'count': 1, 'type': 'Internal', 'cost': 300, 'days': 0, 'skill_1': 'hardware design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, {'role': 'Hardware Architect', 'count': 1, 'type': 'Agency', 'cost': 450, 'days': 0, 'skill_1': 'hardware design', 'skill_2': 'fault finding', 'skill_3': 'coding'}, {'role': 'Software Engineer', 'type': 'Internal', 'count': 1, 'cost': 195, 'days': 0, 'skill_1': 'code', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Software Engineer', 'type': 'Agency', 'count': 1, 'cost': 295, 'days': 0, 'skill_1': 'code', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Hardware Engineer', 'type': 'Internal', 'count': 1, 'cost': 175, 'days': 0, 'skill_1': 'build', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Hardware Engineer', 'type': 'Agency', 'count': 1, 'cost': 275, 'days': 0, 'skill_1': 'build', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Project Manager', 'type': 'Internal', 'count': 1, 'cost': 275, 'days': 0, 'skill_1': 'plan', 'skill_2': 'manage', 'skill_3': 'cost'}, {'role': 'Project Manager', 'type': 'Agency', 'count': 1, 'cost': 450, 'days': 0, 'skill_1': 'plan', 'skill_2': 'manage', 'skill_3': 'cost'}, {'role': 'Project Analyst', 'type': 'Internal', 'count': 1, 'cost': 175, 'days': 0, 'skill_1': 'update', 'skill_2': 'replan', 'skill_3': 'resourcing'}, {'role': 'Project Analyst', 'type': 'Agency', 'count': 1, 'cost': 250, 'days': 0, 'skill_1': 'update', 'skill_2': 'replan', 'skill_3': 'resourcing'}]}
+json_data = {'Hardware': [{'type': 'Board', 'description': 'A83-S', 'count': 1, 'price': 25, 'manufacturing_cost': 14, 'design_cost': 8, 'coding_cost': 0, 'testing_cost': 1.38, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test', 'skill_3_needed': 'build'}, {'type': 'CPU', 'description': '68k0', 'count': 1, 'price': 8, 'manufacturing_cost': 0, 'design_cost': 0, 'coding_cost': 0, 'testing_cost': 0}, {'type': 'Glue Chip', 'description': 'G1', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'Glue Chip', 'description': 'G2', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'Glue Chip', 'description': 'G3', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'Glue Chip', 'description': 'G4', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'RAM', 'description': '256KB', 'count': 2, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}], 'Software': [{'type': 'OS', 'description': 'HB/OS in ROM', 'count': 1, 'price': 0, 'manufacturing_cost': 0, 'design_cost': 9, 'coding_cost': 8.85, 'testing_cost': 1.38, 'lines_of_code': 1000, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'software design'}, {'type': 'OS', 'description': 'MccOS', 'count': 1, 'price': 0, 'manufacturing_cost': 0, 'design_cost': 2.25, 'coding_cost': 2.95, 'testing_cost': 0.15, 'lines_of_code': 1000, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'software design'}, {'type': 'OS', 'description': 'Libraries and drivers', 'count': 1, 'price': 25, 'manufacturing_cost': 0, 'design_cost': 12.38, 'coding_cost': 19.18, 'testing_cost': 0.52, 'lines_of_code': 1000, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'software design'}], 'Resources': [{'role': 'Software Architect', 'type': 'Internal', 'count': 1, 'cost': 250, 'days': 0, 'skill_1': 'software design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, {'role': 'Software Architect', 'type': 'Agency', 'count': 1, 'cost': 400, 'days': 0, 'skill_1': 'software design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, {'role': 'Hardware Architect', 'count': 1, 'type': 'Internal', 'cost': 300, 'days': 0, 'skill_1': 'hardware design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, {'role': 'Hardware Architect', 'count': 1, 'type': 'Agency', 'cost': 450, 'days': 0, 'skill_1': 'hardware design', 'skill_2': 'fault finding', 'skill_3': 'coding'}, {'role': 'Software Engineer', 'type': 'Internal', 'count': 1, 'cost': 195, 'days': 0, 'skill_1': 'code', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Software Engineer', 'type': 'Agency', 'count': 1, 'cost': 295, 'days': 0, 'skill_1': 'code', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Hardware Engineer', 'type': 'Internal', 'count': 1, 'cost': 175, 'days': 0, 'skill_1': 'build', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Hardware Engineer', 'type': 'Agency', 'count': 1, 'cost': 275, 'days': 0, 'skill_1': 'build', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Project Manager', 'type': 'Internal', 'count': 1, 'cost': 275, 'days': 0, 'skill_1': 'plan', 'skill_2': 'manage', 'skill_3': 'cost'}, {'role': 'Project Manager', 'type': 'Agency', 'count': 1, 'cost': 450, 'days': 0, 'skill_1': 'plan', 'skill_2': 'manage', 'skill_3': 'cost'}, {'role': 'Project Analyst', 'type': 'Internal', 'count': 1, 'cost': 175, 'days': 0, 'skill_1': 'update', 'skill_2': 'replan', 'skill_3': 'resourcing'}, {'role': 'Project Analyst', 'type': 'Agency', 'count': 1, 'cost': 250, 'days': 0, 'skill_1': 'update', 'skill_2': 'replan', 'skill_3': 'resourcing'}]}
 # End Test Data
 
 # Classes
@@ -212,15 +212,52 @@ class ProjectEstimator:
         manufacturing_cost = self.total_manufacturing_cost()
         coding_cost = self.total_coding_cost()
         testing_cost = self.total_testing_cost()
-        return (hardware_cost + software_cost + design_cost + manufacturing_cost + coding_cost + testing_cost) * 2
+        return round((hardware_cost + software_cost + design_cost + manufacturing_cost + coding_cost + testing_cost) * 2) # Multiply by 2 to account for 2000 systems
     
     def cost_per_system(self):
         '''Calculate the cost per system in GBP.'''
-        return (self.total_system_cost() / 2000)
+        return round(self.total_system_cost() / 2000)
     
-    def cocomo_estimation(self):
-        '''Estimate the cost of the system using the COCOMO model.'''
-        pass
+    def cocomo_estimation(self, mode): # TODO: Implement COCOMO estimation
+        '''Estimate the cost of the system using the COCOMO model.
+        It takes a mode parameter which can be one of the following:
+        - Organic
+        - Semi-Detached
+        - Embedded
+        Based on the mode, the model will use the appropriate values for the
+        effort multipliers and scale factors.'''
+
+        constants = {
+            "Organic": {"a": 2.4, "b": 1.05, "c": 2.5, "d": 0.38},
+            "Semi-Detached": {"a": 3.0, "b": 1.12, "c": 2.5, "d": 0.35},
+            "Embedded": {"a": 3.6, "b": 1.20, "c": 2.5, "d": 0.32}
+        }
+
+        # Step 1: Validate user input to avoid errors
+        if mode in constants:
+            a, b, c, d = constants[mode].values()
+        else:
+            raise ValueError("Invalid mode. Please use one of the following: Organic, Semi-Detached, Embedded")
+        
+        # Step 2: Iterate over all software components and calculate the total lines of code
+        total_lines_of_code = 0
+        for component in self.software_components:
+            total_lines_of_code += self.software_components[component]['Lines of Code'] * self.software_components[component]['Count']
+        
+        # Step 3: Calculate the effort multipliers
+        effort_multipliers = a * (total_lines_of_code / 1000) ** b
+        development_time = c * (effort_multipliers ** d)
+        staff_required = effort_multipliers / development_time
+        
+        # Step 4: Calculate the scale factors
+        scale_factors = 0
+        for component in self.software_components:
+            scale_factors += self.software_components[component]['Lines of Code'] * self.software_components[component]['Count']
+        
+        # Step 5: Estimate the cost of the system
+        average_monthly_staff_cost = 6040 # Average monthly staff cost in GBP
+        return round(average_monthly_staff_cost * staff_required * development_time) # TODO: CHECK THIS CALCULATION
+    
 
     # Method to read data
     def read_json_data(self, json_data):
@@ -328,5 +365,6 @@ class StaffMember:
 pe = ProjectEstimator()
 pe.read_json_data(json_data)
 print(f'Total System Cost (2000): {pe.total_system_cost()}')
-print(f'Cost per System: {pe.cost_per_system()}')
+print(f'Cost per System: GBP {pe.cost_per_system()}')
+print(f'COCOCMO Estimation: GBP {pe.cocomo_estimation("Organic")}')
 # print(pe.resources)
