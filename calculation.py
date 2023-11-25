@@ -53,7 +53,7 @@ class ProjectEstimator:
         self.hardware_components[hardware_component.description] = {
             "Count": hardware_component.count,
             "Cost": (hardware_component.price * 1000), # per quantity of 1000
-            "Manufacturing Cost": hardware_component.manufacturing_cost,
+            "Manufacturing Cost": (hardware_component.manufacturing_cost * 1000),
             "Design Cost": hardware_component.design_cost,
             "Coding Cost": hardware_component.coding_cost,
             "Testing Cost": hardware_component.testing_cost,
@@ -138,8 +138,7 @@ class ProjectEstimator:
         return total_cost
 
     def total_manufacturing_cost(self):
-        '''Calculate the cost of all manufacturing work in GBP.'''
-        '''Calculate the cost of all hardware components in GBP.'''
+        '''Calculate the cost of all manufacturing cost in GBP.'''
         total_cost = 0
         for component in self.hardware_components:
             total_cost += (self.hardware_components[component]['Manufacturing Cost']
@@ -422,5 +421,7 @@ print(f'Cost per System: GBP {pe.cost_per_system()}')
 print(f'COCOCMO Estimation: GBP {pe.cocomo_estimation("Organic")}')
 print(f'Total Software Cost: GBP {pe.total_software_cost()}')
 print(f'Total Hardware Cost: GBP {pe.total_hardware_cost()}')
+print(f'Total Manufacturing Cost: GBP {pe.total_manufacturing_cost()}')
+# print(f'Hardware Components: {pe.hardware_components}')
 print(f'Total Coding Cost: GBP {pe.total_coding_cost()}')
-# print(pe.resources)
+print(pe.resources)
