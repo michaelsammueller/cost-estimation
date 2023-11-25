@@ -1,14 +1,14 @@
 {
 	"Hardware": [{
 			"type": "Board",
-			"description": "A83-S",
+			"description": "Pro Expansion Board",
 			"count": 1,
-			"price": 25,
-			"manufacturing_cost": 14,
-			"design_cost": 8,
+			"price": 0,
+			"manufacturing_cost": 15,
+			"design_cost": 0,
 			"coding_cost": 0,
-			"testing_cost": 1.38,
-			"skill_1_needed": "design",
+			"testing_cost": 0,
+			"skill_1_needed": "hardware design",
 			"skill_2_needed": "test"
 		},
 		{
@@ -19,7 +19,9 @@
 			"manufacturing_cost": 0,
 			"design_cost": 0,
 			"coding_cost": 0,
-			"testing_cost": 0
+			"testing_cost": 0,
+			"skill_1_needed": "hardware design",
+			"skill_2_needed": "test"
 		},
 		{
 			"type": "Glue Chip",
@@ -30,7 +32,7 @@
 			"design_cost": 16,
 			"coding_cost": 0,
 			"testing_cost": 2.76,
-			"skill_1_needed": "design",
+			"skill_1_needed": "hardware design",
 			"skill_2_needed": "test"
 		},
 		{
@@ -42,7 +44,7 @@
 			"design_cost": 16,
 			"coding_cost": 0,
 			"testing_cost": 2.76,
-			"skill_1_needed": "design",
+			"skill_1_needed": "hardware design",
 			"skill_2_needed": "test"
 		},
 		{
@@ -54,7 +56,7 @@
 			"design_cost": 16,
 			"coding_cost": 0,
 			"testing_cost": 2.76,
-			"skill_1_needed": "design",
+			"skill_1_needed": "hardware design",
 			"skill_2_needed": "test"
 		},
 		{
@@ -66,7 +68,7 @@
 			"design_cost": 16,
 			"coding_cost": 0,
 			"testing_cost": 2.76,
-			"skill_1_needed": "design",
+			"skill_1_needed": "hardware design",
 			"skill_2_needed": "test"
 		},
 		{
@@ -75,10 +77,106 @@
 			"count": 2,
 			"price": 5,
 			"manufacturing_cost": 0,
-			"design_cost": 16,
+			"design_cost": 0,
+			"coding_cost": 0,
+			"testing_cost": 0,
+			"skill_1_needed": "hardware design",
+			"skill_2_needed": "test"
+		},
+		{
+			"type": "ROM",
+			"description": "8KB",
+			"count": 1,
+			"price": 1.5,
+			"manufacturing_cost": 0,
+			"design_cost": 0,
+			"coding_cost": 0,
+			"testing_cost": 0,
+			"skill_1_needed": "hardware design",
+			"skill_2_needed": "test"
+		},
+		{
+			"type": "ROM",
+			"description": "32KB",
+			"count": 1,
+			"price": 4,
+			"manufacturing_cost": 0,
+			"design_cost": 0,
 			"coding_cost": 0,
 			"testing_cost": 2.76,
-			"skill_1_needed": "design",
+			"skill_1_needed": "hardware design",
+			"skill_2_needed": "test"
+		},
+		{
+			"type": "IO",
+			"description": "sc100",
+			"count": 1,
+			"price": 12,
+			"manufacturing_cost": 0,
+			"design_cost": 0,
+			"coding_cost": 0,
+			"testing_cost": 0,
+			"skill_1_needed": "hardware design",
+			"skill_2_needed": "test"
+		},
+		{
+			"type": "GDISP",
+			"description": "XvX",
+			"count": 1,
+			"price": 25,
+			"manufacturing_cost": 0,
+			"design_cost": 0,
+			"coding_cost": 0,
+			"testing_cost": 0,
+			"skill_1_needed": "hardware design",
+			"skill_2_needed": "test"
+		},
+		{
+			"type": "MISC",
+			"description": "Resistors",
+			"count": 100,
+			"price": 0,
+			"manufacturing_cost": 0.5,
+			"design_cost": 0,
+			"coding_cost": 0,
+			"testing_cost": 0,
+			"skill_1_needed": "hardware design",
+			"skill_2_needed": "test"
+		},
+		{
+			"type": "Case",
+			"description": "Desktop",
+			"count": 1,
+			"price": 25 ,
+			"manufacturing_cost": 0,
+			"design_cost": 0,
+			"coding_cost": 0,
+			"testing_cost": 0,
+			"skill_1_needed": "hardware design",
+			"skill_2_needed": "test"
+		},
+		{
+			"type": "Storage",
+			"description": "3.5 Floppy",
+			"count": 1,
+			"price": 7.5,
+			"manufacturing_cost": 0,
+			"design_cost": 0,
+			"coding_cost": 0,
+			"testing_cost": 0,
+			"skill_1_needed": "hardware design",
+			"skill_2_needed": "test"
+		},
+		{
+			"type": "INTSND",
+			"description": "i8042",
+			"count": 1,
+			"price": 1.5,
+			"manufacturing_cost": 0,
+			"design_cost": 0,
+			"coding_cost": 0,
+			"testing_cost": 0,
+			"skill_1_needed": "hardware design",
 			"skill_2_needed": "test"
 		}
 	],
@@ -94,7 +192,7 @@
 			"lines_of_code": 100,
 			"skill_1_needed": "code",
 			"skill_2_needed": "test",
-			"skill_3_needed": "design"
+			"skill_3_needed": "software design"
 
 		},
 		{
@@ -109,7 +207,7 @@
 			"lines_of_code": 100,
 			"skill_1_needed": "code",
 			"skill_2_needed": "test",
-			"skill_3_needed": "design"
+			"skill_3_needed": "software design"
 		},
 		{
 			"type": "OS",
@@ -123,7 +221,7 @@
 			"lines_of_code": 100,
 			"skill_1_needed": "code",
 			"skill_2_needed": "test",
-			"skill_3_needed": "design"
+			"skill_3_needed": "software design"
 		}
 	],
 	"Resources": [{
