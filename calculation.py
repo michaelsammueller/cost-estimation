@@ -139,35 +139,11 @@ class ProjectEstimator:
 
     def total_manufacturing_cost(self):
         '''Calculate the cost of all manufacturing work in GBP.'''
+        '''Calculate the cost of all hardware components in GBP.'''
         total_cost = 0
-        work_cap = 260 # Maximum number of days a staff member can work
-
-        # Add hardware components to list of tuples
-        hardware_components = [(name, details) for name, details in self.hardware_components.items()]
-
-        # Step 1: Filter components that require manufacturing skills
-        manufacturing_components = [component for component in hardware_components
-                                    if 'build' in component[1]['Skills Required']]
-
-        # Step 2: Filter staff with manufacturing skills and sort by cost
-        manufacturing_staff = sorted([staff for staff in self.resources.values()
-                                      if 'build' in staff['Skills']],
-                                      key=lambda x: x['Cost'])
-
-        # Step 3: Assign components to staff
-        for name, component in manufacturing_components:
-            component_assigned = False
-            for required_skill in component['Skills Required']:
-                for staff in manufacturing_staff:
-                    if not component_assigned and required_skill in staff['Skills'] and staff['Days'] + component['Manufacturing Cost'] <= work_cap:
-                        staff['Days'] += component['Manufacturing Cost']
-                        total_cost += (staff['Cost']
-                                       * component['Manufacturing Cost']
-                                       * component['Count'])
-                        component_assigned = True
-                        break
-                if component_assigned:
-                    break
+        for component in self.hardware_components:
+            total_cost += (self.hardware_components[component]['Manufacturing Cost']
+                           * self.hardware_components[component]['Count'])
         return total_cost
 
 
@@ -445,5 +421,6 @@ print(f'Total System Cost (2000): {pe.total_system_cost()}')
 print(f'Cost per System: GBP {pe.cost_per_system()}')
 print(f'COCOCMO Estimation: GBP {pe.cocomo_estimation("Organic")}')
 print(f'Total Software Cost: GBP {pe.total_software_cost()}')
+print(f'Total Hardware Cost: GBP {pe.total_hardware_cost()}')
 print(f'Total Coding Cost: GBP {pe.total_coding_cost()}')
 # print(pe.resources)
