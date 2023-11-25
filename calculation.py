@@ -224,9 +224,8 @@ class ProjectEstimator:
         testing_cost = self.total_testing_cost()
         # Adding all individual costs together to calculate the cost of 1000 systems.
         # We then multiply by 2 to account for 2000 systems.
-        return round((hardware_cost + software_cost
-                      + design_cost + manufacturing_cost
-                      + coding_cost + testing_cost) * 2) # Multiply by 2 to account for 2000 systems
+        return round(coding_cost + testing_cost + design_cost +
+                     (hardware_cost * 2) + (software_cost * 2) + (manufacturing_cost * 2))
 
     def cost_per_system(self):
         '''Calculate the cost per system in GBP.'''
@@ -235,10 +234,10 @@ class ProjectEstimator:
 
     def total_staff_cost(self):
         """Calculate the total cost of all staff in GBP"""
-        total_cost = 0
-        for staff in self.resources.values():
-            total_cost += staff['Cost'] * staff['Days']
-
+        design_cost = self.total_design_cost()
+        coding_cost = self.total_coding_cost()
+        testing_cost = self.total_testing_cost()
+        total_cost = design_cost + coding_cost + testing_cost
         return total_cost
 
     def cocomo_estimation(self, mode):
