@@ -23,6 +23,12 @@ class ProjectEstimator:
     # the Estimator to be populated with data, allowing other methods to
     # iterate over the information required to perform calculations.
 
+    def clear(self):
+        """clear"""
+        self.software_components = {}
+        self.hardware_components = {}
+        self.resources = {}
+
     def add_software_component(self, software_component):
         '''Adds software component to software component dictionary.'''
         # Filter out None values from the skills as not all components require 3 skills
@@ -226,6 +232,14 @@ class ProjectEstimator:
         '''Calculate the cost per system in GBP.'''
         # Divide the total system cost by 2000 to get the cost per system.
         return round(self.total_system_cost() / 2000)
+
+    def total_staff_cost(self):
+        """Calculate the total cost of all staff in GBP"""
+        total_cost = 0
+        for staff in self.resources.values():
+            total_cost += staff['Cost'] * staff['Days']
+
+        return total_cost
 
     def cocomo_estimation(self, mode):
         '''Estimate the cost of the system using the COCOMO model.

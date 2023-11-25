@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import filedialog, ttk, messagebox
 import json
+from calculation import ProjectEstimator
 
 
 class GuiMain:
@@ -18,6 +19,9 @@ class GuiMain:
         self.frame_top.pack(side=TOP)
         self.frame_bot = tk.Frame(self.root, bg='white')
         self.frame_bot.pack(pady=10, side=BOTTOM)
+
+        # Initializing Calculation.py
+        self.estimator = ProjectEstimator()
 
         # Initializing click events
         self.root.bind('<ButtonRelease-1>', self.table_select)
@@ -283,14 +287,26 @@ class GuiMain:
 
     def calculate_data(self):
         """ Function for calculating data using file.py algorithm"""
-        a = 3
-        b = 4
-        ab = a + b
 
-        self.grand_total_entry.insert(0, ab)
-        self.cost_system_entry.insert(0, ab)
-        self.tsc_cocomo_entry.insert(0, ab)
-        self.atsc_entry.insert(0, ab)
+        # Clears fields when making a new calculation
+        self.grand_total_entry.delete(0, tk.END)
+        self.cost_system_entry.delete(0, tk.END)
+        self.tsc_cocomo_entry.delete(0, tk.END)
+        self.atsc_entry.delete(0, tk.END)
+
+        # Clears data dict in calculator.py
+        self.estimator.clear()
+        self.estimator.read_json_data(self.json_data)
+
+        # gets
+        grand_total = self.estimator.total_system_cost()
+        system_cost = self.estimator.cost_per_system()
+        cocomo_cost = self.estimator.cocomo_estimation("Organic")
+        actual_staff_cost = self.estimator.total_staff_cost()
+        self.grand_total_entry.insert(0, grand_total)
+        self.cost_system_entry.insert(0, system_cost)
+        self.tsc_cocomo_entry.insert(0, cocomo_cost)
+        self.atsc_entry.insert(0, actual_staff_cost)
 
 
 start = GuiMain()
