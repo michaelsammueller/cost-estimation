@@ -19,6 +19,10 @@ class GuiMain:
         self.frame_bot = tk.Frame(self.root, bg='white')
         self.frame_bot.pack(pady=10, side=BOTTOM)
 
+        # Initializing click events
+        self.root.bind('<ButtonRelease-1>', self.table_select)
+        self.root.bind('<Button-3>', self.clear_selection)
+
         # Initializing .json data set
         self.json_data = {}
 
@@ -27,6 +31,8 @@ class GuiMain:
         self.table_view.heading('#0', text='Component')
         self.table_view.heading('value', text='Value')
         self.table_view.pack(expand=True, fill=tk.BOTH)
+
+
 
         # Event binding for table/treeview selection
         self.root.bind('<ButtonRelease-1>', self.table_select)
@@ -70,6 +76,7 @@ class GuiMain:
         self.key_label.grid(row=0, column=0, padx=5)
         self.key_entry = tk.Entry(self.frame_bot)
         self.key_entry.grid(row=0, column=1, padx=5)
+
         self.value_label = tk.Label(self.frame_bot, text='VALUES', bg='White')
         self.value_label.grid(row=0, column=2, padx=5)
         self.value_entry = tk.Entry(self.frame_bot)
@@ -95,11 +102,11 @@ class GuiMain:
 
     def about_window(self):
         about_window = messagebox.showinfo("About", " Welcome to the Synful Computing Cost Calculator App "
-                                                   "\n(UOE / Group 3)" 
-                                                   "\n _________________________________________________"
-                                                   "\nUpload Json = To preview data in Table View"
-                                           "\nNew = To clear table and add new data in the Table View"
-                                           "\nSave = Save data to a new Json file")
+                                                    "\n(UOE / Group 3)"
+                                                    "\n _________________________________________________"
+                                                    "\nUpload Json = To preview data in Table View"
+                                                    "\nNew = To clear table and add new data in the Table View"
+                                                    "\nSave = Save data to a new Json file")
 
     def open_app(self):
         """Starts Tkinter"""
@@ -123,21 +130,23 @@ class GuiMain:
             self.table_fill('', self.json_data)
 
             confirmed = messagebox.showinfo("File Loaded", f"JSON file '{file1}' loaded successfully.")
-            print(self.json_data)
 
     def table_fill(self, key, value, parent=""):
         """ Function for adding data to the table tree viewer """
         # insuring item is a dict or list then allocating the values
         if isinstance(value, dict):
-            parent_id = self.table_view.insert(parent, 'end', text=key, open=True)
+            parent_id = self.table_view.insert(parent, 'end', text=key, open=True,)
+
             for key, value in value.items():
                 self.table_fill(key, value, parent_id)
         elif isinstance(value, list):
             parent_id = self.table_view.insert(parent, 'end', text=key, open=True)
+
             for i, item in enumerate(value):
                 self.table_fill(str(i), item, parent_id)
         else:
             self.table_view.insert(parent, 'end', text=key, values=(value,))
+
 
     def table_clear(self, skip=False):
         """ Function for clearing all the data in table  """
@@ -153,16 +162,31 @@ class GuiMain:
     def table_select(self, event):
         """ Function for adding the selected data from the table to the fields """
         # selecting data items based clicking on the table using ttk method
-        selected_item = self.table_view.selection()
-        # collecting the key and value from selected data from the table to the corresponding fields
-        if selected_item:
-            item = self.table_view.item(selected_item)
-            key = item['text']
-            value = item['values'][0] if item['values'] else ''
-            self.key_entry.delete(0, tk.END)
-            self.key_entry.insert(0, key)
-            self.value_entry.delete(0, tk.END)
-            self.value_entry.insert(0, value)
+        if event.num == 1:
+            # Get the selected items from the table
+            selected_item = self.table_view.selection()
+
+            # Check if there is any selected item
+            if selected_item:
+                # Collecting the key and value from the selected data from the table to the corresponding fields
+                item = self.table_view.item(selected_item)
+                key = item['text']
+                value = item['values'][0] if item['values'] else ''
+
+                self.key_entry.delete(0, tk.END)
+                self.key_entry.insert(0, key)
+                self.value_entry.delete(0, tk.END)
+                self.value_entry.insert(0, value)
+        else:
+            # Left mouse button wasn't clicked, clear the selection
+            self.table_view.selection_remove(self.table_view.selection())
+
+    def clear_selection(self, event):
+        """Function to clear the selection in the Treeview"""
+        self.table_view.selection_remove(self.table_view.selection())
+        self.value_entry.delete(0, tk.END)
+        self.key_entry.delete(0, tk.END)
+
 
     def edit(self):
         """ Function for editing the selected data from input fields """
@@ -244,6 +268,7 @@ class GuiMain:
     def save(self):
         """ Function for saving the modified data to a new Json file """
         if not self.json_data:
+            confirmed = messagebox.showinfo("Error", "No JSON data to save")
             print("No JSON data to save.")
             return
 
@@ -253,6 +278,7 @@ class GuiMain:
             # Save the changes back to the selected file
             with open(file_path, 'w') as file:
                 json.dump(self.json_data, file, indent=2)
+            confirmed = messagebox.showinfo("File Saved", f"JSON file '{file}' Saved successfully.")
             print("Changes saved to", file_path)
 
     def calculate_data(self):
