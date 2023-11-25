@@ -1,25 +1,36 @@
 '''
     Includes all classes and methods for the cost estimator
 '''
-
-# Test Data
-# TODO: Remove test data
-
-json_data = {'Hardware': [{'type': 'Board', 'description': 'A83-S', 'count': 1, 'price': 25, 'manufacturing_cost': 14, 'design_cost': 8, 'coding_cost': 0, 'testing_cost': 1.38, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test', 'skill_3_needed': 'build'}, {'type': 'CPU', 'description': '68k0', 'count': 1, 'price': 8, 'manufacturing_cost': 0, 'design_cost': 0, 'coding_cost': 0, 'testing_cost': 0}, {'type': 'Glue Chip', 'description': 'G1', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'Glue Chip', 'description': 'G2', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'Glue Chip', 'description': 'G3', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'Glue Chip', 'description': 'G4', 'count': 1, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}, {'type': 'RAM', 'description': '256KB', 'count': 2, 'price': 5, 'manufacturing_cost': 0, 'design_cost': 16, 'coding_cost': 0, 'testing_cost': 2.76, 'skill_1_needed': 'hardware design', 'skill_2_needed': 'test'}], 'Software': [{'type': 'OS', 'description': 'HB/OS in ROM', 'count': 1, 'price': 0, 'manufacturing_cost': 0, 'design_cost': 9, 'coding_cost': 8.85, 'testing_cost': 1.38, 'lines_of_code': 1000, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'software design'}, {'type': 'OS', 'description': 'MccOS', 'count': 1, 'price': 0, 'manufacturing_cost': 0, 'design_cost': 2.25, 'coding_cost': 2.95, 'testing_cost': 0.15, 'lines_of_code': 1000, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'software design'}, {'type': 'OS', 'description': 'Libraries and drivers', 'count': 1, 'price': 25, 'manufacturing_cost': 0, 'design_cost': 12.38, 'coding_cost': 19.18, 'testing_cost': 0.52, 'lines_of_code': 1000, 'skill_1_needed': 'code', 'skill_2_needed': 'test', 'skill_3_needed': 'software design'}], 'Resources': [{'role': 'Software Architect', 'type': 'Internal', 'count': 1, 'cost': 250, 'days': 0, 'skill_1': 'software design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, {'role': 'Software Architect', 'type': 'Agency', 'count': 1, 'cost': 400, 'days': 0, 'skill_1': 'software design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, {'role': 'Hardware Architect', 'count': 1, 'type': 'Internal', 'cost': 300, 'days': 0, 'skill_1': 'hardware design', 'skill_2': 'fault finding', 'skill_3': 'layout'}, {'role': 'Hardware Architect', 'count': 1, 'type': 'Agency', 'cost': 450, 'days': 0, 'skill_1': 'hardware design', 'skill_2': 'fault finding', 'skill_3': 'coding'}, {'role': 'Software Engineer', 'type': 'Internal', 'count': 1, 'cost': 195, 'days': 0, 'skill_1': 'code', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Software Engineer', 'type': 'Agency', 'count': 1, 'cost': 295, 'days': 0, 'skill_1': 'code', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Hardware Engineer', 'type': 'Internal', 'count': 1, 'cost': 175, 'days': 0, 'skill_1': 'build', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Hardware Engineer', 'type': 'Agency', 'count': 1, 'cost': 275, 'days': 0, 'skill_1': 'build', 'skill_2': 'test', 'skill_3': 'troubleshoot'}, {'role': 'Project Manager', 'type': 'Internal', 'count': 1, 'cost': 275, 'days': 0, 'skill_1': 'plan', 'skill_2': 'manage', 'skill_3': 'cost'}, {'role': 'Project Manager', 'type': 'Agency', 'count': 1, 'cost': 450, 'days': 0, 'skill_1': 'plan', 'skill_2': 'manage', 'skill_3': 'cost'}, {'role': 'Project Analyst', 'type': 'Internal', 'count': 1, 'cost': 175, 'days': 0, 'skill_1': 'update', 'skill_2': 'replan', 'skill_3': 'resourcing'}, {'role': 'Project Analyst', 'type': 'Agency', 'count': 1, 'cost': 250, 'days': 0, 'skill_1': 'update', 'skill_2': 'replan', 'skill_3': 'resourcing'}]}
-# End Test Data
+from data import json_data
 
 # Classes
 class ProjectEstimator:
+    '''
+    The Project Estimator class is used to estimate the cost of a software
+    engineering project. It is able to create "HardwareComponent", "SoftwareComponent",
+    and "StaffMember" objects and add them to the estimator. It can then calculate
+    the total cost of the system, the cost per system, and estimate the staffing cost for
+    the software using the COCOMO model.
+    '''
     def __init__(self):
+        # Empty dictionaries that will host individual objects.
         self.software_components = {}
         self.hardware_components = {}
         self.resources = {}
-    
-    # Methods to add components to the estimator
+
+    # Methods to add components and/or staff members to the estimator.
+    # These methods are called by the read_json_data method. This allows
+    # the Estimator to be populated with data, allowing other methods to
+    # iterate over the information required to perform calculations.
+
     def add_software_component(self, software_component):
         '''Adds software component to software component dictionary.'''
-        # Filter out None values from the skills
-        required_skills = [skill for skill in [software_component.skill_1_needed, software_component.skill_2_needed, software_component.skill_3_needed] if skill is not None]
+        # Filter out None values from the skills as not all components require 3 skills
+        required_skills = [skill for skill
+                           in [software_component.skill_1_needed,
+                               software_component.skill_2_needed,
+                               software_component.skill_3_needed]
+                               if skill is not None]
         self.software_components[software_component.description] = {
             "Count": software_component.count,
             "Cost": (software_component.price * 1000), # per quantity of 1000
@@ -33,8 +44,12 @@ class ProjectEstimator:
 
     def add_hardware_component(self, hardware_component):
         '''Adds hardware component to hardware component dictionary.'''
-        # Filter out None values from the skills
-        required_skills = [skill for skill in [hardware_component.skill_1_needed, hardware_component.skill_2_needed, hardware_component.skill_3_needed] if skill is not None]
+        # Filter out None values from the skills as not all components require 3 skills
+        required_skills = [skill for skill
+                           in [hardware_component.skill_1_needed,
+                               hardware_component.skill_2_needed,
+                               hardware_component.skill_3_needed]
+                               if skill is not None]
         self.hardware_components[hardware_component.description] = {
             "Count": hardware_component.count,
             "Cost": (hardware_component.price * 1000), # per quantity of 1000
@@ -44,11 +59,15 @@ class ProjectEstimator:
             "Testing Cost": hardware_component.testing_cost,
             "Skills Required": required_skills
         }
-    
+
     def add_staff_member(self, staff_member):
         '''Adds staff member to staff member dictionary.'''
-        # Filter out None values from the skills
-        skills = [skill for skill in [staff_member.skill_1, staff_member.skill_2, staff_member.skill_3] if skill is not None]
+        # Filter out None values from the skills as not all staff members have 3 skills
+        skills = [skill for skill
+                  in [staff_member.skill_1,
+                      staff_member.skill_2,
+                      staff_member.skill_3]
+                      if skill is not None]
         staff_id = (staff_member.role + " - " + staff_member.type)
         self.resources[staff_id] = {
             "Count": staff_member.count,
@@ -56,22 +75,34 @@ class ProjectEstimator:
             "Days": staff_member.days,
             "Skills": skills
         }
-    
-    # Methods to calculate costs
+
+    # Methods to calculate costs:
+    # - Total Software Cost - Calculates the cost of all software components.
+    # - Total Hardware Cost - Calculates the cost of all hardware components.
+    # - Total Design Cost - Calculates the cost of all design work.
+    # - Total Manufacturing Cost - Calculates the cost of all manufacturing work.
+    # - Total Coding Cost - Calculates the cost of all coding work.
+    # - Total Testing Cost - Calculates the cost of all testing work.
+    # - Total System Cost - Calculates the total cost of all 2000 systems.
+    # - Cost per System - Calculates the cost per system.
+    # - COCOMO Estimation - Estimates the cost of the system using the COCOMO model.
+
     def total_software_cost(self):
         '''Calculate the cost of all software components in GBP.'''
         total_cost = 0
         for component in self.software_components:
-            total_cost += self.software_components[component]['Cost'] * self.software_components[component]['Count']
+            total_cost += (self.software_components[component]['Cost']
+                           * self.software_components[component]['Count'])
         return total_cost
-    
+
     def total_hardware_cost(self):
         '''Calculate the cost of all hardware components in GBP.'''
         total_cost = 0
         for component in self.hardware_components:
-            total_cost += self.hardware_components[component]['Cost'] * self.hardware_components[component]['Count']
+            total_cost += (self.hardware_components[component]['Cost']
+                           * self.hardware_components[component]['Count'])
         return total_cost
-    
+
     def total_design_cost(self):
         '''Calculate the cost of all design work in GBP.'''
         total_cost = 0
@@ -84,20 +115,19 @@ class ProjectEstimator:
         design_components = [component for component in all_components
                              if 'hardware design' in component[1]['Skills Required'] or
                              'software design' in component[1]['Skills Required']]
-        
+
         # Step 2: Filter staff with design skills and sort by cost
         design_staff = sorted([staff for staff in self.resources.values()
                                if 'hardware design' in staff['Skills'] or
                                'software design' in staff['Skills']],
                                key=lambda x: x['Cost'])
-        
+
         # Step 3: Assign components to staff
         for name, component in design_components:
             component_assigned = False
             for required_skill in component['Skills Required']:
                 for staff in design_staff:
                     if not component_assigned and required_skill in staff['Skills'] and staff['Days'] + component['Design Cost'] <= work_cap:
-                        # print(f'{staff} assigned to {component} for {component["Design Cost"]} days.')
                         staff['Days'] += component['Design Cost']
                         total_cost += staff['Cost'] * component['Design Cost']
                         component_assigned = True
@@ -118,27 +148,28 @@ class ProjectEstimator:
         # Step 1: Filter components that require manufacturing skills
         manufacturing_components = [component for component in hardware_components
                                     if 'build' in component[1]['Skills Required']]
-        
+
         # Step 2: Filter staff with manufacturing skills and sort by cost
         manufacturing_staff = sorted([staff for staff in self.resources.values()
                                       if 'build' in staff['Skills']],
                                       key=lambda x: x['Cost'])
-        
+
         # Step 3: Assign components to staff
         for name, component in manufacturing_components:
             component_assigned = False
             for required_skill in component['Skills Required']:
                 for staff in manufacturing_staff:
                     if not component_assigned and required_skill in staff['Skills'] and staff['Days'] + component['Manufacturing Cost'] <= work_cap:
-                        # print(f'{staff} assigned to {component} for {component["Manufacturing Cost"]} days')
                         staff['Days'] += component['Manufacturing Cost']
-                        total_cost += staff['Cost'] * component['Manufacturing Cost'] * component['Count']
+                        total_cost += (staff['Cost']
+                                       * component['Manufacturing Cost']
+                                       * component['Count'])
                         component_assigned = True
                         break
                 if component_assigned:
                     break
         return total_cost
-                                    
+
 
     def total_coding_cost(self):
         '''Calculate the cost of all coding work in GBP.'''
@@ -151,19 +182,18 @@ class ProjectEstimator:
         # Step 1: Filter components that require coding skills
         coding_components = [component for component in software_components
                                 if 'code' in component[1]['Skills Required']]
-        
+
         # Step 2: Filter staff with coding skills and sort by cost
         coding_staff = sorted([staff for staff in self.resources.values()
                                 if 'code' in staff['Skills']],
                                 key=lambda x: x['Cost'])
-        
+
         # Step 3: Assign components to staff
         for name, component in coding_components:
             component_assigned = False
             for required_skill in component['Skills Required']:
                 for staff in coding_staff:
                     if not component_assigned and required_skill in staff['Skills'] and staff['Days'] + component['Coding Cost'] <= work_cap:
-                        # print(f'{staff} assigned to {component} for {component["Coding Cost"]} days')
                         staff['Days'] += component['Coding Cost']
                         total_cost += staff['Cost'] * component['Coding Cost'] * component['Count']
                         component_assigned = True
@@ -183,19 +213,18 @@ class ProjectEstimator:
         # Step 1: Filter components that require testing skills
         testing_components = [component for component in all_components
                                 if 'test' in component[1]['Skills Required']]
-        
+
         # Step 2: Filter staff with testing skills and sort by cost
         testing_staff = sorted([staff for staff in self.resources.values()
                                 if 'test' in staff['Skills']],
                                 key=lambda x: x['Cost'])
-        
+
         # Step 3: Assign components to staff
         for name, component in testing_components:
             component_assigned = False
             for required_skill in component['Skills Required']:
                 for staff in testing_staff:
                     if not component_assigned and required_skill in staff['Skills'] and staff['Days'] + component['Testing Cost'] <= work_cap:
-                        # print(f'{staff} assigned to {component} for {component["Testing Cost"]} days')
                         staff['Days'] += component['Testing Cost']
                         total_cost += staff['Cost'] * component['Testing Cost'] * component['Count']
                         component_assigned = True
@@ -212,13 +241,18 @@ class ProjectEstimator:
         manufacturing_cost = self.total_manufacturing_cost()
         coding_cost = self.total_coding_cost()
         testing_cost = self.total_testing_cost()
-        return round((hardware_cost + software_cost + design_cost + manufacturing_cost + coding_cost + testing_cost) * 2) # Multiply by 2 to account for 2000 systems
-    
+        # Adding all individual costs together to calculate the cost of 1000 systems.
+        # We then multiply by 2 to account for 2000 systems.
+        return round((hardware_cost + software_cost
+                      + design_cost + manufacturing_cost
+                      + coding_cost + testing_cost) * 2) # Multiply by 2 to account for 2000 systems
+
     def cost_per_system(self):
         '''Calculate the cost per system in GBP.'''
+        # Divide the total system cost by 2000 to get the cost per system.
         return round(self.total_system_cost() / 2000)
-    
-    def cocomo_estimation(self, mode): # TODO: Implement COCOMO estimation
+
+    def cocomo_estimation(self, mode):
         '''Estimate the cost of the system using the COCOMO model.
         It takes a mode parameter which can be one of the following:
         - Organic
@@ -227,6 +261,7 @@ class ProjectEstimator:
         Based on the mode, the model will use the appropriate values for the
         effort multipliers and scale factors.'''
 
+        # Creating constants we can access based on the mode.
         constants = {
             "Organic": {"a": 2.4, "b": 1.05, "c": 2.5, "d": 0.38},
             "Semi-Detached": {"a": 3.0, "b": 1.12, "c": 2.5, "d": 0.35},
@@ -238,28 +273,64 @@ class ProjectEstimator:
             a, b, c, d = constants[mode].values()
         else:
             raise ValueError("Invalid mode. Please use one of the following: Organic, Semi-Detached, Embedded")
-        
+
         # Step 2: Iterate over all software components and calculate the total lines of code
         total_lines_of_code = 0
         for component in self.software_components:
-            total_lines_of_code += self.software_components[component]['Lines of Code'] * self.software_components[component]['Count']
-        
-        # Step 3: Calculate the effort multipliers
-        effort_multipliers = a * (total_lines_of_code / 1000) ** b
+            total_lines_of_code += (self.software_components[component]['Lines of Code']
+                                    * self.software_components[component]['Count'])
+
+        # Step 3: Calculate the scale factors
+        # COCOMO II assigns values between 0.6 to 1.4 for each scale factor, with 1.0 being nominal.
+        # We will assume that "moderate" is 1.0.
+        #
+        # Based on the case study for Synful, we will assume the following factors:
+        # 1. Precedentedness - Moderate (Experience with indidivual components
+        # but not building an entire system to this scale)
+        # 2. Development Flexibility - Moderate (Some flexibility, but clear
+        # requirements and a fixed deadline)
+        # 3. Architecture/Risk Resolution - Low (Risks and their mtigations
+        # have been identified)
+        # 4. Team Cohesion - Low (Part of the team has worked together, some
+        # are agency hires)
+        # 5. Process Maturity - Moderate (Some processes are in place, but
+        # new ones are being developed for this project)
+        # 6. Required Software Reliability - Moderate (Consumer product, not
+        # mission critical. Can be patched if bugs are found)
+
+        scale_factor_values = {
+            "Precedentedness": 1.0,
+            "Development Flexibility": 1.0,
+            "Architecture/Risk Resolution": 1.2,
+            "Team Cohesion": 1.1,
+            "Process Maturity": 1.0,
+            "Required Software Reliability": 1.0
+        }
+
+        scale_factor = 1
+        for value in scale_factor_values.values():
+            scale_factor *= value
+
+        # Step 4: Calculate the effort multipliers
+        effort_multipliers = a * (total_lines_of_code / 1000) ** b * scale_factor
         development_time = c * (effort_multipliers ** d)
+        # Check if development time is zero
+        if development_time == 0:
+            raise ValueError("Development time cannot be zero.")
         staff_required = effort_multipliers / development_time
-        
-        # Step 4: Calculate the scale factors
-        scale_factors = 0
-        for component in self.software_components:
-            scale_factors += self.software_components[component]['Lines of Code'] * self.software_components[component]['Count']
-        
+
         # Step 5: Estimate the cost of the system
         average_monthly_staff_cost = 6040 # Average monthly staff cost in GBP
-        return round(average_monthly_staff_cost * staff_required * development_time) # TODO: CHECK THIS CALCULATION
-    
+        return round(average_monthly_staff_cost * staff_required * development_time)
 
-    # Method to read data
+
+    # Method to read data. This method is called to populate the CostEstimator class
+    # with data from a JSON file. This method needs to be called first before any
+    # calculations can be performed.
+    # This method creates an instances of the HardwareComponent, SoftwareComponent,
+    # and StaffMember classes and adds them to the relevant dictionaries in the
+    # CostEstimator class.
+
     def read_json_data(self, json_data):
         '''Reads JSON data and adds it to the project estimator.'''
         for item in json_data['Hardware']:
@@ -277,7 +348,7 @@ class ProjectEstimator:
                 skill_3_needed=item.get('skill_3_needed', None)
             )
             self.add_hardware_component(hardware_component)
-        
+
         for item in json_data['Software']:
             software_component = SoftwareComponent(
                 type=item['type'],
@@ -294,7 +365,7 @@ class ProjectEstimator:
                 skill_3_needed=item.get('skill_3_needed', None)
             )
             self.add_software_component(software_component)
-        
+
         for item in json_data['Resources']:
             staff_member = StaffMember(
                 role=item['role'],
@@ -309,7 +380,10 @@ class ProjectEstimator:
             self.add_staff_member(staff_member)
 
 class HardwareComponent:
-    def __init__(self, type, description, count, price, manufacturing_cost, design_cost, coding_cost, testing_cost, skill_1_needed, skill_2_needed, skill_3_needed):
+    '''Class to represent a hardware component.'''
+    def __init__(self, type, description, count, price, manufacturing_cost,
+                 design_cost, coding_cost, testing_cost, skill_1_needed,
+                 skill_2_needed, skill_3_needed):
         self.type = type
         self.description = description
         self.count = count
@@ -323,7 +397,10 @@ class HardwareComponent:
         self.skill_3_needed = skill_3_needed
 
 class SoftwareComponent:
-    def __init__(self, type, description, count, price, manufacturing_cost, design_cost, coding_cost, testing_cost, lines_of_code, skill_1_needed, skill_2_needed, skill_3_needed):
+    '''Class to represent a software component.'''
+    def __init__(self, type, description, count, price, manufacturing_cost,
+                 design_cost, coding_cost, testing_cost, lines_of_code,
+                 skill_1_needed, skill_2_needed, skill_3_needed):
         self.type = type
         self.description = description
         self.count = count
@@ -338,6 +415,7 @@ class SoftwareComponent:
         self.skill_3_needed = skill_3_needed
 
 class StaffMember:
+    '''Class to represent a staff member.'''
     def __init__(self, role, type, count, cost, days, skill_1, skill_2, skill_3):
         self.role = role
         self.type = type
@@ -348,14 +426,13 @@ class StaffMember:
         self.skill_1 = skill_1
         self.skill_2 = skill_2
         self.skill_3 = skill_3
-    
+
     def assign_to_task(self, days_required):
         '''Assigns staff member to a task for a given duration.'''
         if self.days + days_required <= self.work_cap:
             self.days += days_required
             return True
-        else:
-            return False
+        return False
 
     def get_total_cost(self):
         '''Returns the cost for assigned duration.'''
@@ -368,4 +445,5 @@ print(f'Total System Cost (2000): {pe.total_system_cost()}')
 print(f'Cost per System: GBP {pe.cost_per_system()}')
 print(f'COCOCMO Estimation: GBP {pe.cocomo_estimation("Organic")}')
 print(f'Total Software Cost: GBP {pe.total_software_cost()}')
+print(f'Total Coding Cost: GBP {pe.total_coding_cost()}')
 # print(pe.resources)
