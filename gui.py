@@ -134,6 +134,7 @@ class GuiMain:
             self.table_fill('', self.json_data)
 
             confirmed = messagebox.showinfo("File Loaded", f"JSON file '{file1}' loaded successfully.")
+        print(self.json_data)
 
     def table_fill(self, key, value, parent=""):
         """ Function for adding data to the table tree viewer """
