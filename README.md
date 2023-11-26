@@ -150,7 +150,7 @@ calculation and estimation algorithms are triggered, and their results passed to
 Being a vital aspect of software development, we conducted several tests on our code to ensure correct functionality of our algorithms,
 and to double-check adherence to code quality guidelines.
 
-***<u>Unit Tests</u>***
+**<u>Unit Tests</u>**
 
 As development progresses and the code becomes more complex, simple 'print' statements aren't enough to test the functionality of code.
 While they are still useful and have been used in addition to unit tests, we feel that unit tests are more appropriate to ensure
@@ -164,7 +164,7 @@ we ensure that instances of classes are created as expected, as well as making s
 The attached screenshot demonstrates some of the tests which have been written for our back-end code. All of these tests can be found within the
 'test_calculations.py' file in this repository.
 
-***<u>pylint</u>***
+**<u>pylint</u>**
 
 As part of our testing, we wanted to make sure that our code adheres to Python style guides and the "Zen of Python". Using 'pylint' allowed us to check for
 code smells, as well as logical errors and efficiency improvements. The initial run of 'pylint' resulted in a score of 5.68.
