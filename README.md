@@ -135,11 +135,49 @@ This is a proposed class structure for the cost estimator.
 Note that in this design, we define a HardwareComponent class, a SoftwareComponent class, a StaffMember class, 
 and a ProjectEstimator class.
 
-![project_cost_estimator_v3](https://github.com/michaelsammueller/cost-estimation/assets/34138597/de70003b-d9e1-4873-aaf3-3a140760fcf1)
+![project_cost_estimator](https://github.com/michaelsammueller/cost-estimation/assets/34138597/6420a93d-c813-49c4-b35e-ba660ca2e2b7)
+
+The ProjectEstimator class is the main class, which hosts all of the calculation and estimation algorithms. Whenever the user opens
+the program, an instance of the ProjectEstimator is created. When the user uploads a JSON file into the GUI or CLI, the ProjectEstimator
+triggers its 'read_json_data(json_data)' method, which populates the empty 'software_components', 'hardware_components', and 'resources'
+dictionaries with the data defined in the JSON file.
+
+Once the user presses the 'Calculate' button on the GUI, or selects the 'Calculate' option in the CLI, all of the ProjectEstimator's
+calculation and estimation algorithms are triggered, and their results passed to the user interface to display the final values.
 
 **<u>Testing</u>**
 
-Work in Progress
+Being a vital aspect of software development, we conducted several tests on our code to ensure correct functionality of our algorithms,
+and to double-check adherence to code quality guidelines.
+
+***<u>Unit Tests</u>***
+
+As development progresses and the code becomes more complex, simple 'print' statements aren't enough to test the functionality of code.
+While they are still useful and have been used in addition to unit tests, we feel that unit tests are more appropriate to ensure
+functionality of code.
+
+Using Python's inbuilt 'unittest' library, we created a 'test_calculations.py' file in addition to several unit tests. By conducting these tests,
+we ensure that instances of classes are created as expected, as well as making sure that our calculation algorithms work as expected wherever necessary.
+
+![unittests](https://github.com/michaelsammueller/cost-estimation/assets/34138597/55ff2ea2-fe28-4f1c-b6ac-ecda84c77fe0)
+
+The attached screenshot demonstrates some of the tests which have been written for our back-end code. All of these tests can be found within the
+'test_calculations.py' file in this repository.
+
+***<u>pylint</u>***
+
+As part of our testing, we wanted to make sure that our code adheres to Python style guides and the "Zen of Python". Using 'pylint' allowed us to check for
+code smells, as well as logical errors and efficiency improvements. The initial run of 'pylint' resulted in a score of 5.68.
+
+![pylint-run-1](https://github.com/michaelsammueller/cost-estimation/assets/34138597/96ac50b3-feba-45bc-8732-c9f76116e4a1)
+
+After making improvements such as removing unnecessary whitespaces and shortening line-lengths, as well as correcting some logical errors and improving the
+overall flow of the code, we end up with a total score of 8.20. While there are still aspects of the code which could use improvement, we are satisfied with
+the final scoring and will leave any further improvements for a later development stage, as we do not want to alter the code too much and risk losing
+core functionality at this stage.
+
+![pylint-run-2](https://github.com/michaelsammueller/cost-estimation/assets/34138597/3da9590e-cdc2-4784-843f-218773a09af7)
+
 ___
 ##  References   
 
