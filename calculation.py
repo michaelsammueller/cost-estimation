@@ -28,6 +28,15 @@ class ProjectEstimator:
         self.software_components = {}
         self.hardware_components = {}
         self.resources = {}
+    
+    def store_initial_days(self):
+        '''Stores the initial working days of staff members.'''
+        self.initial_days = {staff_id: staff['Days'] for staff_id, staff in self.resources.items()}
+    
+    def reset_days_to_initial(self):
+        '''Reset the "Days" value of staff members to the initial value.'''
+        for staff_id, initial_days in self.initial_days.items():
+            self.resources[staff_id]['Days'] = initial_days
 
     def add_software_component(self, software_component):
         '''Adds software component to software component dictionary.'''
@@ -218,14 +227,11 @@ class ProjectEstimator:
         '''Calculate the total cost of the system in GBP.'''
         hardware_cost = self.total_hardware_cost()
         software_cost = self.total_software_cost()
-        design_cost = self.total_design_cost()
         manufacturing_cost = self.total_manufacturing_cost()
-        coding_cost = self.total_coding_cost()
-        testing_cost = self.total_testing_cost()
+        staff_cost = self.total_staff_cost()
         # Adding all individual costs together to calculate the cost of 1000 systems.
         # We then multiply by 2 to account for 2000 systems.
-        return round(coding_cost + testing_cost + design_cost +
-                     (hardware_cost * 2) + (software_cost * 2) + (manufacturing_cost * 2))
+        return round(staff_cost + (hardware_cost * 2) + (software_cost * 2) + (manufacturing_cost * 2))
 
     def cost_per_system(self):
         '''Calculate the cost per system in GBP.'''
@@ -234,10 +240,10 @@ class ProjectEstimator:
 
     def total_staff_cost(self):
         """Calculate the total cost of all staff in GBP"""
-        design_cost = self.total_design_cost()
-        coding_cost = self.total_coding_cost()
-        testing_cost = self.total_testing_cost()
-        total_cost = design_cost + coding_cost + testing_cost
+        self.store_initial_days()
+        total_cost = self.total_design_cost() + self.total_coding_cost() + self.total_testing_cost()
+        self.reset_days_to_initial()
+
         return total_cost
 
     def cocomo_estimation(self, mode):
@@ -429,12 +435,22 @@ class StaffMember:
 # Tests
 pe = ProjectEstimator()
 pe.read_json_data(json_data)
-print(f'Total System Cost (2000): {pe.total_system_cost()}')
-print(f'Cost per System: GBP {pe.cost_per_system()}')
-print(f'COCOCMO Estimation: GBP {pe.cocomo_estimation("Organic")}')
-print(f'Total Software Cost: GBP {pe.total_software_cost()}')
-print(f'Total Hardware Cost: GBP {pe.total_hardware_cost()}')
-print(f'Total Manufacturing Cost: GBP {pe.total_manufacturing_cost()}')
+# print(f'Total System Cost (2000): {pe.total_system_cost()}')
+# print(f'Cost per System: GBP {pe.cost_per_system()}')
+# print(f'COCOCMO Estimation: GBP {pe.cocomo_estimation("Organic")}')
+# print(f'Total Software Cost: GBP {pe.total_software_cost()}')
+# print(f'Total Hardware Cost: GBP {pe.total_hardware_cost()}')
+# print(f'Total Manufacturing Cost: GBP {pe.total_manufacturing_cost()}')
 # print(f'Hardware Components: {pe.hardware_components}')
-print(f'Total Coding Cost: GBP {pe.total_coding_cost()}')
-print(pe.resources)
+# print(f'Total Coding Cost: GBP {pe.total_coding_cost()}')
+# print(pe.resources)
+print(f'Total System Cost (2000): {pe.total_system_cost()}')
+print(f'Total Cost per System: GBP {pe.cost_per_system()}')
+print(f'Total Hardware Cost: GBP {pe.total_hardware_cost()}')
+print(f'Total Software Cost: GBP {pe.total_software_cost()}')
+print(f'Total Manufacturing Cost: GBP {pe.total_manufacturing_cost()}')
+print(f'Total Staff Cost: GBP {pe.total_staff_cost()}')
+print(f'Total Staff Cost per System: GBP {pe.total_staff_cost() / 2000}')
+print(f'Total Manufacturing Cost per System: GBP {pe.total_manufacturing_cost() / 1000}')
+print(f'Total Hardware Cost per System: GBP {pe.total_hardware_cost() / 1000}')
+print(f'Total Software Cost per System: GBP {pe.total_software_cost() / 1000}')
