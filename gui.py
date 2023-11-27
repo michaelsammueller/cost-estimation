@@ -95,7 +95,7 @@ class GuiMain:
         self.cost_system_label.grid(row=1, column=2, padx=5, pady=20)
         self.cost_system_entry = tk.Entry(self.frame_bot)
         self.cost_system_entry.grid(row=1, column=3, padx=5, pady=20)
-        self.tsc_cocomo_label = tk.Label(self.frame_bot, text='TOTAL STAFF COST (COCOMO)', bg='White', fg='Green')
+        self.tsc_cocomo_label = tk.Label(self.frame_bot, text='COCOMO COST', bg='White', fg='Green')
         self.tsc_cocomo_label.grid(row=1, column=4, padx=5, pady=20)
         self.tsc_cocomo_entry = tk.Entry(self.frame_bot)
         self.tsc_cocomo_entry.grid(row=1, column=5, padx=5, pady=20)
@@ -133,8 +133,10 @@ class GuiMain:
             self.json_data = json.load(file1)
             self.table_fill('', self.json_data)
 
-            confirmed = messagebox.showinfo("File Loaded", f"JSON file '{file1}' loaded successfully.")
-        print(self.json_data)
+            file_path = file1.name
+            last_slash_index = file_path.rfind("/")
+            file_name = file_path[last_slash_index + 1:]
+            confirmed = messagebox.showinfo("File Loaded", f"JSON file '{file_name}' loaded successfully.")
 
     def table_fill(self, key, value, parent=""):
         """ Function for adding data to the table tree viewer """
@@ -289,6 +291,9 @@ class GuiMain:
     def calculate_data(self):
         """ Function for calculating data using file.py algorithm"""
 
+        if not self.json_data:
+            confirmed = messagebox.showwarning("No Data", " No Json Data to calculate!")
+
         # Clears fields when making a new calculation
         self.grand_total_entry.delete(0, tk.END)
         self.cost_system_entry.delete(0, tk.END)
@@ -299,7 +304,7 @@ class GuiMain:
         self.estimator.clear()
         self.estimator.read_json_data(self.json_data)
 
-        # gets
+        # gets calculation methods from calculator
         grand_total = self.estimator.total_system_cost()
         system_cost = self.estimator.cost_per_system()
         cocomo_cost = self.estimator.cocomo_estimation("Organic")
