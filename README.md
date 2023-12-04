@@ -2,6 +2,8 @@
 
 *A cost estimating application  using industry standard JSON data.
 (University of Essex - September 2023 (SEPM) Assignment Part 2*
+
+*Presentation can be found here: https://drive.google.com/file/d/1Ai44efGKLJVmnpEFnd1pqY9bTcFOkRfy/view
 ___
 ### Features 
 1. CLI and GUI based application
